@@ -1,0 +1,3 @@
+[submodule "skitch"]
+	path = skitch
+	url = git@github.com:maackle/skitch
