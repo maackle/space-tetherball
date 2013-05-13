@@ -10,23 +10,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="deb5576e-d571-465f-96ff-7bbb01abc568" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tball/Reloading.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/src/tball/ReloadingCBP.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/maackle/Game.scala" afterPath="$PROJECT_DIR$/src/maackle/Game.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/maackle/GameState.scala" afterPath="$PROJECT_DIR$/src/maackle/GameState.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/scala_compiler.xml" afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/maackle/Input.scala" afterPath="$PROJECT_DIR$/src/maackle/Input.scala" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/tball/Reloading.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/maackle/util.scala" afterPath="$PROJECT_DIR$/src/maackle/util.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/maackle" afterPath="$PROJECT_DIR$/src/maackle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/maackle/Game.scala" afterPath="$PROJECT_DIR$/src/maackle/Game.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/TETHERBALL_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/TETHERBALL_jar.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/maackle/util.scala" afterPath="$PROJECT_DIR$/src/maackle/util.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/maackle/GameState.scala" afterPath="$PROJECT_DIR$/src/maackle/GameState.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/maackle/Input.scala" afterPath="$PROJECT_DIR$/src/maackle/Input.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/scala_compiler.xml" afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" />
     </list>
     <ignored path="halloween.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368341512932" ignored="false" />
+    <file path="/Dummy.txt" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368416969191" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/main/scala/scalene/physics/Physics.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357880977933" ignored="false" />
     <file path="/Physics.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357733715950" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/test/scala/scalene/vector/tests/VectorTests.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1355049075830" ignored="false" />
@@ -44,7 +44,7 @@
     <file path="/Things.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357736207992" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/main/scala/scalene/core/ThingStore.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357730694868" ignored="false" />
     <file path="/ThingStore.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357730677044" ignored="false" />
-    <file path="/a.dummy" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368381195078" ignored="false" />
+    <file path="/a.dummy" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368427119315" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/main/scala/scalene/core/State.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357733959755" ignored="false" />
     <file path="/State.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357733959755" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/main/scala/scalene/core/Domain.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357733909572" ignored="false" />
@@ -75,11 +75,11 @@
     <file path="/Swift.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357727379621" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/main/scala/demos/swifts/things/SwiftSwarm.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357733893866" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/main/scala/scalene/vector/vec.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357729198454" ignored="false" />
-    <file path="/fragment.java" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368382369689" ignored="false" />
+    <file path="/fragment.java" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368422728891" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/main/scala/demos/tomboy/Tomboy.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357730574463" ignored="false" />
     <file path="/Play.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357736722815" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/main/scala/demos/swifts/states/PlayState.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357733844635" ignored="false" />
-    <file path="/PlayState.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368407635722" ignored="false" />
+    <file path="/PlayState.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368428359672" ignored="false" />
     <file path="/SwiftSwarm.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357733894342" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/main/scala/demos/pong/Pong.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357880977933" ignored="false" />
     <file path="/Pong.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1357735892311" ignored="false" />
@@ -130,15 +130,15 @@
     <file path="$PROJECT_DIR$/../skitch-engine/scratch/src/main/java/org/newdawn/slick/opengl/renderer/ImmediateModeOGLRenderer.java" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368320544290" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-engine/scratch/src/main/java/org/newdawn/slick/opengl/renderer/SGL.java" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368320545614" ignored="false" />
     <file path="/GlyphPage.java" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368320627539" ignored="false" />
-    <file path="/Tetherball.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368341633948" ignored="false" />
-    <file path="/Pole.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368323543267" ignored="false" />
+    <file path="/Tetherball.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368415141955" ignored="false" />
+    <file path="/Pole.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368415202736" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/managed/Traits.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368324724416" ignored="false" />
     <file path="/Traits.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368334277152" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/managed/components/Component.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368331892711" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/Transform.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368334483723" ignored="false" />
     <file path="$PROJECT_DIR$/../scalene/src/main/scala/scalene/gfx/Transform.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368325585209" ignored="false" />
     <file path="/Transform.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368334479334" ignored="false" />
-    <file path="/a.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368325948304" ignored="false" />
+    <file path="/a.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368415074012" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/skitch/common.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368326108816" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/Types.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368326126778" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/components/Component.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368327485936" ignored="false" />
@@ -155,10 +155,10 @@
     <file path="/GL.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368327330652" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/skitch/core/components/Component.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368335125816" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/skitch/core/managed/components/Component.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368327441687" ignored="false" />
-    <file path="/Sprite.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368335177340" ignored="false" />
+    <file path="/Sprite.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368428693540" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/skitch/core/Transform.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368335125816" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/managed/components/Position.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368327999070" ignored="false" />
-    <file path="/Position.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368327956279" ignored="false" />
+    <file path="/Position.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368419032956" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/build.sbt" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368328426183" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/Traits.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368334502622" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/managed/SkitchState.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368335306249" ignored="false" />
@@ -167,22 +167,34 @@
     <file path="/Thing.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368330406766" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/managed/package.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368330599657" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/managed/View.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368333210652" ignored="false" />
-    <file path="/View.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368332965969" ignored="false" />
+    <file path="/View.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368428303650" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/View.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368332439767" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/Rect.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368331262641" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/test/src/main/scala/ManagedTest.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368335344094" ignored="false" />
     <file path="/ManagedTest.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368335294531" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/core/SkitchApp.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368332368269" ignored="false" />
-    <file path="/SkitchApp.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368406733212" ignored="false" />
+    <file path="/SkitchApp.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368425096902" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/src/main/scala/skitch/gfx/SpriteAnimation.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368335095088" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/skitch/gfx/SpriteAnimation.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368335125816" ignored="false" />
     <file path="$PROJECT_DIR$/../skitch-dev/skitch/skitch/core/managed/Render.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368335125816" ignored="false" />
     <file path="/Resource.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368342432303" ignored="false" />
     <file path="/ResourceLoader.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368342253936" ignored="false" />
-    <file path="/Player.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368382219443" ignored="false" />
-    <file path="/EventSink.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368407930512" ignored="false" />
+    <file path="/Player.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368429211689" ignored="false" />
+    <file path="/EventSink.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368414803476" ignored="false" />
     <file path="/TODO.md" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368383060143" ignored="false" />
     <file path="/EventSource.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368405861703" ignored="false" />
+    <file path="/Ball.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368428756065" ignored="false" />
+    <file path="/build.sbt" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368416551840" ignored="false" />
+    <file path="/Rope.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368416863941" ignored="false" />
+    <file path="/B2Body.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368429067138" ignored="false" />
+    <file path="$PROJECT_DIR$/../tball-old/src/maackle/traits/traits.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368421551338" ignored="false" />
+    <file path="/traits.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368421550114" ignored="false" />
+    <file path="/B2World.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368429503701" ignored="false" />
+    <file path="/Rect.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368425694897" ignored="false" />
+    <file path="/DebugDrawGL.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368427933430" ignored="false" />
+    <file path="/B2Implicits.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368427420693" ignored="false" />
+    <file path="/GFX.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368427667891" ignored="false" />
+    <file path="/B2DebugView.scala" changelist="deb5576e-d571-465f-96ff-7bbb01abc568" time="1368428516159" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,34 +264,45 @@
       <file leaf-file-name="Tetherball.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/Tetherball.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="36" selection-start="565" selection-end="565" vertical-scroll-proportion="0.0">
+            <state line="19" column="33" selection-start="601" selection-end="601" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlayState.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/states/PlayState.scala">
+      <file leaf-file-name="DebugDrawGL.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/DebugDrawGL.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="9" selection-start="501" selection-end="501" vertical-scroll-proportion="0.0">
+            <state line="18" column="5" selection-start="558" selection-end="558" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#28#52#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="common.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/common.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="45" selection-start="1181" selection-end="1181" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SkitchState.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/managed/SkitchState.scala">
+      <file leaf-file-name="Rope.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Rope.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="0" selection-start="779" selection-end="779" vertical-scroll-proportion="0.0">
+            <state line="15" column="0" selection-start="159" selection-end="159" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SkitchState.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/SkitchState.scala">
+      <file leaf-file-name="Ball.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Ball.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="68" selection-start="276" selection-end="276" vertical-scroll-proportion="0.0">
+            <state line="14" column="0" selection-start="417" selection-end="417" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -288,27 +311,110 @@
       <file leaf-file-name="SkitchApp.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/SkitchApp.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="37" selection-start="2117" selection-end="2117" vertical-scroll-proportion="0.0">
+            <state line="41" column="0" selection-start="1172" selection-end="1172" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Player.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Player.scala">
+      <file leaf-file-name="B2Body.scala" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/B2Body.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0">
+            <state line="35" column="17" selection-start="847" selection-end="847" vertical-scroll-proportion="0.29189688">
               <folding>
-                <element signature="e#27#51#0" expanded="true" />
+                <element signature="e#28#56#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EventSink.scala" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Image.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/gfx/Image.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="31" selection-start="535" selection-end="535" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Sprite.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/gfx/Sprite.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="21" selection-start="333" selection-end="333" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GL.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/gl/GL.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="63" column="47" selection-start="1331" selection-end="1331" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpriteAnimation.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/gfx/SpriteAnimation.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="0" selection-start="649" selection-end="649" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="B2DebugView.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/B2DebugView.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="0" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#28#58#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SkitchState.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/SkitchState.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="0" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="View.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/managed/View.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="6" selection-start="847" selection-end="847" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="View.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/View.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="92" column="10" selection-start="2024" selection-end="2024" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Rect.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/Rect.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="14" selection-start="462" selection-end="462" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EventSink.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/EventSink.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="74" selection-end="74" vertical-scroll-proportion="0.040567953">
+            <state line="69" column="13" selection-start="1432" selection-end="1432" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -317,7 +423,7 @@
       <file leaf-file-name="EventSource.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/EventSource.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="33" selection-start="468" selection-end="468" vertical-scroll-proportion="0.0">
+            <state line="19" column="34" selection-start="469" selection-end="469" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -326,7 +432,7 @@
       <file leaf-file-name="Pole.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Pole.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0">
+            <state line="18" column="0" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -350,22 +456,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Pole.scala" />
-        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/gfx/Sprite.scala" />
-        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/ResourceLoader.scala" />
-        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/Resource.scala" />
-        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/helpers/Location.scala" />
-        <option value="$PROJECT_DIR$/tetherball/src/main/scala/tetherball/Tetherball.scala" />
-        <option value="$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Player.scala" />
-        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/managed/ThingManager.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/Rect.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/gfx/SpriteAnimation.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/gl/GL.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/B2Implicits.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/gfx/GFX.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/View.scala" />
         <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/managed/View.scala" />
-        <option value="$PROJECT_DIR$/tetherball/src/main/scala/TODO.md" />
-        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/EventSource.scala" />
-        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/SkitchState.scala" />
-        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/managed/SkitchState.scala" />
-        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/SkitchApp.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/B2DebugView.scala" />
         <option value="$PROJECT_DIR$/tetherball/src/main/scala/tetherball/states/PlayState.scala" />
-        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/core/EventSink.scala" />
+        <option value="$PROJECT_DIR$/tetherball/src/main/scala/tetherball/Tetherball.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/gfx/Sprite.scala" />
+        <option value="$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Ball.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/DebugDrawGL.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/B2Body.scala" />
+        <option value="$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/B2World.scala" />
+        <option value="$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Player.scala" />
       </list>
     </option>
   </component>
@@ -377,9 +483,9 @@
     <option name="LAST_EDITED_TAB_NAME" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="383" />
+    <option name="x" value="676" />
     <option name="y" value="24" />
-    <option name="width" value="1963" />
+    <option name="width" value="1806" />
     <option name="height" value="1577" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -417,7 +523,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="0" />
+    <option name="STATE" value="2" />
   </component>
   <component name="ProjectView">
     <navigator currentView="PackagesPane" proportions="" version="1" splitterProportion="0.5">
@@ -432,8 +538,266 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="things" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="states" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skitch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skitch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skitch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skitch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skitch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="box2d" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="B2Body.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skitch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewLibrariesNode" />
+            </PATH_ELEMENT>
+          </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="tetherball" />
@@ -498,6 +862,46 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="skitch" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skitch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skitch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stage.box2d" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tetherball" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skitch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="skitch" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stage.box2d" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="B2Body.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -594,142 +998,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="org.newdawn.slick" />
+              <option name="myItemId" value="skitch" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="things" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="states" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="skitch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tetherball" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="skitch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
+              <option name="myItemId" value="Component.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -745,8 +1027,8 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="net.orfjackal.sbt.plugin.settings.SbtConfigurable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="options.lastSelected" value="preferences.sourceCode.Scala" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tball-old" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -755,9 +1037,9 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -768,18 +1050,11 @@
       <recent name="tball.entities" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="skitch.stage.box2d" />
       <recent name="tball.things.Player.timer" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Tetherball">
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-      <method />
-    </configuration>
     <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <extension name="scalaCoverage" />
@@ -793,6 +1068,14 @@
       <setting name="testName" value="" />
       <setting name="testKind" value="Class" />
       <setting name="showProgressMessages" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
       <method />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -947,7 +1230,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="383" y="24" width="1963" height="1577" extended-state="4" />
+    <frame x="676" y="24" width="1806" height="1577" extended-state="4" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -970,8 +1253,8 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39967507" sideWeight="0.6776018" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Amazon EC2" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1835798" sideWeight="0.68445945" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26554054" sideWeight="0.8864127" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19955654" sideWeight="0.73445946" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26554054" sideWeight="0.8864127" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="JavaRebel Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Kahlua" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="JavaRebel" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1050,117 +1333,125 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/managed/View.scala">
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/gfx/GFX.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="4" selection-start="447" selection-end="447" vertical-scroll-proportion="0.06906077">
+        <state line="22" column="3" selection-start="416" selection-end="416" vertical-scroll-proportion="0.26243094">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/managed/ThingManager.scala">
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/View.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="6" selection-start="72" selection-end="72" vertical-scroll-proportion="0.055813953">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skitch/src/main/java/org/newdawn/slick/UnicodeFont.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1643" selection-end="1643" vertical-scroll-proportion="0.3799392">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skitch/src/main/java/org/newdawn/slick/svg/SVGMorph.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="16" selection-start="197" selection-end="197" vertical-scroll-proportion="0.10638298">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skitch/src/main/java/org/newdawn/slick/svg/SimpleDiagramRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="27" selection-start="735" selection-end="735" vertical-scroll-proportion="0.22796352">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skitch/src/main/java/org/newdawn/slick/state/GameState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="17" selection-start="356" selection-end="356" vertical-scroll-proportion="0.015197569">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/TODO.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/Tetherball.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="36" selection-start="565" selection-end="565" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Player.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#27#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/SkitchState.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="68" selection-start="276" selection-end="276" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/managed/SkitchState.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="0" selection-start="779" selection-end="779" vertical-scroll-proportion="0.0">
+        <state line="92" column="10" selection-start="2024" selection-end="2024" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/SkitchApp.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="37" selection-start="2117" selection-end="2117" vertical-scroll-proportion="0.0">
+        <state line="41" column="0" selection-start="1172" selection-end="1172" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/managed/View.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="6" selection-start="847" selection-end="847" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/gfx/Sprite.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="21" selection-start="333" selection-end="333" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/Tetherball.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="33" selection-start="601" selection-end="601" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Ball.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="417" selection-end="417" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/B2DebugView.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#28#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/DebugDrawGL.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="5" selection-start="558" selection-end="558" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#28#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/B2Implicits.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="45" selection-start="199" selection-end="199" vertical-scroll-proportion="0.110497236">
+          <folding>
+            <element signature="e#28#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/Traits.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="6" selection-start="168" selection-end="168" vertical-scroll-proportion="0.12430939">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/managed/SkitchState.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="579" selection-end="579" vertical-scroll-proportion="0.24861878">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/B2World.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="18" selection-start="448" selection-end="448" vertical-scroll-proportion="0.3038674">
+          <folding>
+            <element signature="e#28#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/things/Player.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="21" selection-start="1367" selection-end="1367" vertical-scroll-proportion="0.38674033">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tetherball/src/main/scala/tetherball/states/PlayState.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="9" selection-start="501" selection-end="501" vertical-scroll-proportion="0.0">
+        <state line="27" column="20" selection-start="720" selection-end="720" vertical-scroll-proportion="0.24861878">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/EventSource.scala">
+    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/stage/box2d/B2Body.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="33" selection-start="468" selection-end="468" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.10.0-sources.jar!/scala/Function1.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="6" selection-start="1701" selection-end="1701" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/skitch/src/main/scala/skitch/core/EventSink.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="74" selection-end="74" vertical-scroll-proportion="0.040567953">
-          <folding />
+        <state line="35" column="17" selection-start="847" selection-end="847" vertical-scroll-proportion="0.29189688">
+          <folding>
+            <element signature="e#28#56#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
