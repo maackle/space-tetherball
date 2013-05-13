@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="tinylinepp.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/skitch/lib/tinylinepp.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

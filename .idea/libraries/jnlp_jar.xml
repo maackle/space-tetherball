@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jnlp.jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/skitch/lib/jnlp.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
