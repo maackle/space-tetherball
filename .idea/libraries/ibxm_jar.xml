@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="ibxm.jar">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/skitch/lib/ibxm.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
