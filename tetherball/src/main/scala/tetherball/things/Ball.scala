@@ -17,12 +17,11 @@ object Ball {
 
 class Ball(val position:vec2)(implicit val world:World, val app:SkitchApp) extends Thing with Sprite with B2Body with CircleShape {
 
-	val image = Tetherball.loader.image("img/rgbtest.png")
+	val image = Tetherball.loader.image("img/ball.png")
 
 	def radius = dimensions.x / 2
 
 	lazy val body = {
-		import B2Body.defaults._
 		val fixture = B2Body.defaults.fixtureDef
 		val bodydef = B2Body.defaults.bodyDef
 

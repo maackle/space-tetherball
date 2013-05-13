@@ -14,14 +14,10 @@ object Tetherball extends SkitchApp with Logging { self =>
 
 	val loader = new ResourceLoader(new File("tetherball/src/main/resources"))
 
-	val initialWindowSize = Some(800, 800)
+	val initialWindowSize = Some(1280, 800)
 	val windowTitle = "space tetherball"
 	val startState = new PlayState
 	val projectionScale = 1f / 30f
-
-	abstract class State extends SkitchState(this) {
-		val loader = self.loader
-	}
 
 	abstract class Thing extends skitch.core.managed.Thing
 

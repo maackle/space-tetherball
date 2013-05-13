@@ -5,19 +5,18 @@ import tetherball.Tetherball
 import skitch.gfx.Sprite
 import skitch.{Types, Color}
 import tetherball.things.{Ball, Pole, FourDirections, Player}
-import skitch.core.KeyDown
+import skitch.core.{SkitchApp, KeyDown}
 import skitch.vector.vec
 import org.jbox2d.dynamics.World
 import org.jbox2d.common.Vec2
 import skitch.stage.box2d.{B2DebugView, B2World}
 
-class PlayState extends Tetherball.State with B2World {
+class PlayState extends SkitchState(Tetherball) with B2World {
 
 	def onEnter = ()
 	def onExit = ()
 
 	implicit val world:World = new World(new Vec2(0,0), false)
-	implicit val b2world:B2World = this
 
 	val velocityIterations = 10
 	val positionIterations = 10
