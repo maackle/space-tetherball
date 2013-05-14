@@ -8,18 +8,18 @@ import tetherball.Tetherball.Thing
 import org.jbox2d.collision.shapes
 import org.jbox2d.dynamics.{World, Filter, BodyType}
 import skitch.core.components.CircleShape
-import skitch.stage.box2d.B2Body
+import skitch.stage.box2d.Embodied
 import skitch.core.KeyHold
 
 case class FourDirections(left:Int, right:Int, down:Int, up:Int)
 
-class Player(val position:vec2, controls:FourDirections)(implicit val world:World) extends Thing with B2Body with Sprite with CircleShape with EventSink {
+class Player(val position:vec2, controls:FourDirections)(implicit val world:World) extends Thing with Embodied with Sprite with CircleShape with EventSink {
 
 	val app = Tetherball
 
 	val image = Tetherball.loader.image("img/player.png")
 
-	val thrustMagnitude = 40
+	val thrustMagnitude = 120
 
 	def radius = dimensions.x / 2
 
@@ -38,8 +38,8 @@ class Player(val position:vec2, controls:FourDirections)(implicit val world:Worl
 	}
 
 	lazy val body = {
-		val fixture = B2Body.defaults.fixtureDef
-		val bodydef = B2Body.defaults.bodyDef
+		val fixture = Embodied.defaults.fixtureDef
+		val bodydef = Embodied.defaults.bodyDef
 
 		bodydef.`type` = BodyType.DYNAMIC
 		bodydef.position = position

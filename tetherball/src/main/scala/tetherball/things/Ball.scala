@@ -9,21 +9,21 @@ import org.jbox2d.collision.shapes
 import skitch.core.components.CircleShape
 import skitch.gfx.{SpriteLike, Sprite}
 import skitch.core.{SkitchApp, ResourceLike}
-import skitch.stage.box2d.{B2World, B2Body}
+import skitch.stage.box2d.{B2World, Embodied}
 
 object Ball {
 
 }
 
-class Ball(val position:vec2)(implicit val world:World, val app:SkitchApp) extends Thing with Sprite with B2Body with CircleShape {
+class Ball(val position:vec2)(implicit val world:World, val app:SkitchApp) extends Thing with Sprite with Embodied with CircleShape {
 
 	val image = Tetherball.loader.image("img/ball.png")
 
 	def radius = dimensions.x / 2
 
 	lazy val body = {
-		val fixture = B2Body.defaults.fixtureDef
-		val bodydef = B2Body.defaults.bodyDef
+		val fixture = Embodied.defaults.fixtureDef
+		val bodydef = Embodied.defaults.bodyDef
 
 		val circle = new shapes.CircleShape()
 		circle.m_radius = this.radius
