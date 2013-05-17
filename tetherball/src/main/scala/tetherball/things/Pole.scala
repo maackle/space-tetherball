@@ -2,7 +2,6 @@ package tetherball.things
 
 import tetherball.Tetherball.Thing
 import skitch.vector.vec2
-import skitch.core.managed.components.Position2D
 import skitch.core.components.CircleShape
 import skitch.stage.box2d.Embodied
 import org.jbox2d.collision.shapes

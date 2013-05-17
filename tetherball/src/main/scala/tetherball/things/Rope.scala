@@ -4,12 +4,17 @@ import tetherball.Tetherball.Thing
 import skitch.stage.box2d.{B2Implicits, Embodied}
 import skitch.vector.{vec, vec2}
 import org.jbox2d.dynamics.{Body, Filter, BodyType, World}
-import skitch.{helpers, gfx}
+import skitch._
 import skitch.core.components.CircleShape
 import org.jbox2d.collision.shapes
-import org.jbox2d.dynamics.joints.{Joint, WeldJointDef, DistanceJointDef}
+import org.jbox2d.dynamics.joints._
+import skitch.helpers
+import skitch.gfx
+import Types._
 
-class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World) extends Thing {
+class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World) extends Thing with B2Implicits { rope =>
+
+	import Rope._
 
 	lazy val setup = {
 		val pole2ball = ball.position - pole.position
@@ -27,32 +32,101 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World) extends
 		val allNodes = (poleNode :: (ballNode :: innerNodes.reverse).reverse)
 
 		val stickJoints = for( (a,b) <- helpers.pairs(allNodes)) yield {
-			Rope.Joint.stick(a, b, 1.1f)
+			Rope.Joint.stick(a, b, 1.0f)
 		}
-
-		allNodes.map(_.position).foreach(println)
-		helpers.pairs(allNodes).map(_._2.position).foreach(println)
-		stickJoints.map(j => (j.getBodyA.getPosition, j.getBodyB.getPosition)).foreach(println)
 
 		val poleWeld = Rope.Joint.weld(pole.body, poleNode.body, pole.position + direction * pole.radius)
 		val ballWeld = Rope.Joint.weld(ball.body, ballNode.body, ball.position - direction * ball.radius)
 
-		(poleNode, ballNode, innerNodes, allNodes)
+		val attachmentAngle = (poleNode.position - pole.position).angle
+
+		val contactNode = new Rope.Node(poleNode.position) // a dummy node which joins the ball to the pole directly
+		contactNode.body.setType(BodyType.KINEMATIC)
+
+		(poleNode, ballNode, innerNodes, allNodes, contactNode, attachmentAngle)
 	}
 
-	val (poleNode, ballNode, innerNodes, allNodes) = setup
+	lazy val (poleNode, ballNode, innerNodes, allNodes, contactNode, attachmentAngle) = setup
+
+//	val grandJoint = new GrandJoint(ballNode)
+
+	def windingAngle:Radian = {
+		helpers.pairs(allNodes).map({
+			case (a,b) =>
+				val s = (a.position - pole.position).angle
+				val t = (b.position - pole.position).angle
+				helpers.Radian.diff(t, s)
+		}).sum
+	}
+
+	def woundLength:Real = {
+		val r = pole.radius + Rope.Node.radius
+		contactAngle.toFloat * r
+	}
+
+	def outwardSpeed(body: Body): Real = {
+		( (body.getPosition - pole.position).unit dot (body.getLinearVelocity) )
+	}
+
+	def contactAngle: Radian = {
+		val wa = windingAngle
+		val halfPi = math.Pi / 2
+
+		if (wa > halfPi) wa - halfPi
+		else if (wa < -halfPi) wa + halfPi
+		else 0.0
+	}
+
+	def contactPoint: vec2 = vec.polar(pole.radius + Rope.Node.radius, contactAngle + attachmentAngle)
 
 	def update(dt:Float) {
-
+		allNodes.foreach(_.update(dt))
+//		grandJoint.update(dt)
 	}
 
 	def render() {
-
+		Color(0xff00ff).bind()
+		gfx.circle(0.1f, contactPoint)
 	}
 
-	def build() {
+	class GrandJoint(val node:Rope.Node) {
 
+		val initialLength = (contactNode.body.getPosition - ballNode.body.getPosition).length
+		val baseFreq = 30f
+		val eps = 1e-10f
+
+		val j = {
+			val jd = new DistanceJointDef
+			jd.initialize(contactNode.body, node.body, contactNode.body.getPosition, node.body.getPosition)
+			jd.length = initialLength
+			jd.frequencyHz = Rope.Joint.freqHz
+			jd.dampingRatio = Rope.Joint.damping
+			world.createJoint(jd).asInstanceOf[DistanceJoint]
+		}
+
+		def maxLength(woundLength: Real) = {
+			initialLength - woundLength
+		}
+
+		def frequency(length:Real):Real = {
+			val over = length / initialLength
+			println(over)
+			if (over >= 1) over * baseFreq
+			else eps
+			eps
+		}
+
+		def update(dt:Float) {
+			val len = maxLength(rope.woundLength)
+			val freq = {
+				if (rope.outwardSpeed(node.body) > 0) frequency(len)
+				else eps
+			}
+			j.setLength(len)
+			j.setFrequency(freq)
+		}
 	}
+
 }
 
 object Rope {
@@ -101,7 +175,6 @@ object Rope {
 		def stick(a:Node, b:Node, slackFactor:Float)(implicit world:World) = {
 
 			val jd = new DistanceJointDef
-			val jw = new WeldJointDef
 			jd.initialize(a.body, b.body, a.body.getPosition, b.body.getPosition)
 			jd.length = (b.position - a.position).length * slackFactor
 			jd.frequencyHz = Joint.freqHz

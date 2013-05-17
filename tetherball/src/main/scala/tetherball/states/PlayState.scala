@@ -18,7 +18,7 @@ class PlayState extends SkitchState(Tetherball) with B2World {
 	def onEnter = ()
 	def onExit = ()
 
-	implicit val world:World = new World(new Vec2(0,0), false)
+	implicit val world:World = new World(new Vec2(0,0))
 
 	val velocityIterations = 30
 	val positionIterations = 10
@@ -30,9 +30,9 @@ class PlayState extends SkitchState(Tetherball) with B2World {
 
 	val pole = new Pole
 
-	val ball = new Ball(vec(20, 0))
+	val ball = new Ball(vec(10, 0))
 
-	val rope = new Rope(50, pole, ball)
+	val rope = new Rope(20, pole, ball)
 
 	val things = Set(pole, ball, rope, guy)
 
