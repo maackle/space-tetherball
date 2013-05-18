@@ -1,7 +1,7 @@
 package tetherball.things
 
 import tetherball.Tetherball.Thing
-import skitch.stage.box2d.{B2Implicits, Embodied}
+import skitch.stage.box2d.{Embodied, B2Implicits, ManagedEmbodied}
 import skitch.vector.{vec, vec2}
 import org.jbox2d.dynamics.{Body, Filter, BodyType, World}
 import skitch._
@@ -11,28 +11,36 @@ import org.jbox2d.dynamics.joints._
 import skitch.helpers
 import skitch.gfx
 import Types._
+import skitch.gfx.Font
+import skitch.core.SkitchApp
+import org.lwjgl.opengl.GL11
+import tetherball.Tetherball
+import tetherball.Tetherball.Bits._
+import scala.Some
 
-class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World) extends Thing with B2Implicits { rope =>
+class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:SkitchApp) extends Thing with B2Implicits { rope =>
 
 	import Rope._
+
+	val slackFactor = 1f
 
 	lazy val setup = {
 		val pole2ball = ball.position - pole.position
 		val direction = pole2ball.unit
 
-		val poleNode = new Rope.Node( pole.position + direction * (pole.radius + Rope.Node.radius) )
-		val ballNode = new Rope.Node( ball.position - direction * (ball.radius + Rope.Node.radius) )
+		val poleNode = new Node( pole.position + direction * (pole.radius + Rope.radius) )
+		val ballNode = new Node( ball.position - direction * (ball.radius + Rope.radius) )
 
 		val numInnerNodes = numNodes - 2
 		val innerNodes = for(i <- List.range(1, numInnerNodes)) yield {
 			val t = i.toFloat / numInnerNodes
-			new Rope.Node( vec.lerp(poleNode.position, ballNode.position, t) )
+			new Node( vec.lerp(poleNode.position, ballNode.position, t) )
 		}
 
 		val allNodes = (poleNode :: (ballNode :: innerNodes.reverse).reverse)
 
-		val stickJoints = for( (a,b) <- helpers.pairs(allNodes)) yield {
-			Rope.Joint.stick(a, b, 1.0f)
+		val stickJoints = for( (a,b) <- helpers.pairs(allNodes.take(allNodes.size-0))) yield {
+			Rope.Joint.stick(a, b, slackFactor)
 		}
 
 		val poleWeld = Rope.Joint.weld(pole.body, poleNode.body, pole.position + direction * pole.radius)
@@ -40,7 +48,7 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World) extends
 
 		val attachmentAngle = (poleNode.position - pole.position).angle
 
-		val contactNode = new Rope.Node(poleNode.position) // a dummy node which joins the ball to the pole directly
+		val contactNode = new Node(poleNode.position) // a dummy node which joins the ball to the pole directly
 		contactNode.body.setType(BodyType.KINEMATIC)
 
 		(poleNode, ballNode, innerNodes, allNodes, contactNode, attachmentAngle)
@@ -48,24 +56,19 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World) extends
 
 	lazy val (poleNode, ballNode, innerNodes, allNodes, contactNode, attachmentAngle) = setup
 
-//	val grandJoint = new GrandJoint(ballNode)
+	val hardLimits = innerNodes.map(new HardLimit(_))
+
+	lazy val font = new Font("font/UbuntuMono-R.ttf", 24)
+
+	val history = helpers.MemFloat(500)
 
 	def windingAngle:Radian = {
-		helpers.pairs(allNodes).map({
-			case (a,b) =>
-				val s = (a.position - pole.position).angle
-				val t = (b.position - pole.position).angle
-				helpers.Radian.diff(t, s)
-		}).sum
+		ballNode.windAngle
 	}
 
 	def woundLength:Real = {
-		val r = pole.radius + Rope.Node.radius
-		contactAngle.toFloat * r
-	}
-
-	def outwardSpeed(body: Body): Real = {
-		( (body.getPosition - pole.position).unit dot (body.getLinearVelocity) )
+		val r = pole.radius + Rope.radius
+		math.abs(contactAngle.toFloat * r)
 	}
 
 	def contactAngle: Radian = {
@@ -77,23 +80,125 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World) extends
 		else 0.0
 	}
 
-	def contactPoint: vec2 = vec.polar(pole.radius + Rope.Node.radius, contactAngle + attachmentAngle)
+	def contactPoint: vec2 = vec.polar(pole.radius + Rope.radius, contactAngle + attachmentAngle)
 
 	def update(dt:Float) {
+		contactNode.body.setTransform(contactPoint, 0)
 		allNodes.foreach(_.update(dt))
-//		grandJoint.update(dt)
+		hardLimits.foreach(_.update(dt))
+
+		helpers.pairs(allNodes).foreach({ p=>
+			val (a,b) = p
+			val s = (a.position - pole.position).angle
+			val t = (b.position - pole.position).angle
+			b._windAngle = a._windAngle + helpers.Radian.diff(t, s)
+		})
 	}
 
 	def render() {
 		Color(0xff00ff).bind()
 		gfx.circle(0.1f, contactPoint)
+		allNodes.foreach(_.render())
+		hardLimits.foreach(_.render())
+
+		history << windingAngle.toFloat
+
+		gl.matrix {
+			gl.scale(1/50f, 1f)
+			gl.begin(GL11.GL_LINE_STRIP) {
+				for ((y, t) <- history.mem.zipWithIndex) {
+					gl.vertex(t, y + 2)
+				}
+			}
+		}
 	}
 
-	class GrandJoint(val node:Rope.Node) {
+	class Node(initialPosition:vec2)(implicit val world:World) extends ManagedEmbodied with CircleShape {
 
-		val initialLength = (contactNode.body.getPosition - ballNode.body.getPosition).length
-		val baseFreq = 30f
-		val eps = 1e-10f
+		val radius = Rope.radius
+		private[Rope] var isTouching = false
+		private[Rope] var _jointA, _jointB: Option[DistanceJoint] = None
+		private[Rope] var _windAngle = 0.0
+
+		def jointA = _jointA
+		def jointB = _jointB
+		def windAngle = _windAngle
+
+		def setTouching(on:Boolean) {
+			isTouching = on
+
+			if (isTouching) {
+				jointA.map { j =>
+					j.setFrequency(Joint.freqHzTight)
+				}
+			}
+			else {
+				jointA.map { j =>
+					j.setFrequency(Joint.freqHz)
+				}
+			}
+		}
+
+		def isWoundUp = {
+			val sign = math.signum(rope.contactAngle)
+			windAngle * sign < rope.contactAngle * sign
+		}
+
+		override def update(dt:Float) {
+			if (isTouching) {
+				val normal = (position - rope.pole.position).unit
+				if(velocity.dot(normal) < 0) {
+					body.setLinearVelocity( velocity.project(normal.rotate(math.Pi/2)) )
+				}
+			}
+		}
+
+		def render() {
+			if (isWoundUp) {
+				gl.fill(true)
+				Color.cyan.bind()
+			}
+			else {
+				gl.fill(false)
+				Color.yellow.bind()
+			}
+			gfx.circle(radius, position)
+
+		}
+
+		lazy val body = {
+			val fixture = Embodied.defaults.fixtureDef
+			val bodydef = Embodied.defaults.bodyDef
+
+			bodydef.`type` = BodyType.DYNAMIC
+			bodydef.position = initialPosition
+			val body = world.createBody(bodydef)
+
+			val filter = new Filter
+			filter.categoryBits = ROPE_NODE_BIT
+			filter.maskBits = POLE_BIT
+
+			val circle = new shapes.CircleShape()
+			circle.m_radius = this.radius
+
+			fixture.shape = circle
+			fixture.restitution = 0f
+			fixture.density = 2f
+			fixture.userData = this
+			fixture.filter = filter
+
+			body.createFixture(fixture)
+			body
+		}
+	}
+
+
+	class HardLimit(val node:Node) {
+
+		val initialLength = (contactNode.body.getPosition - node.body.getPosition).length
+		val baseFreq = 1000f
+		val earlyTriggerRatio = 0.95f
+		val eps = 1e-5f
 
 		val j = {
 			val jd = new DistanceJointDef
@@ -104,26 +209,42 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World) extends
 			world.createJoint(jd).asInstanceOf[DistanceJoint]
 		}
 
-		def maxLength(woundLength: Real) = {
-			initialLength - woundLength
+		def outwardSpeed: Real = {
+			( (node.position - contactNode.position).unit dot (node.velocity) )
 		}
 
-		def frequency(length:Real):Real = {
-			val over = length / initialLength
-			println(over)
-			if (over >= 1) over * baseFreq
-			else eps
-			eps
+		def actualLength:Real = (node.position - contactNode.position).length
+
+		def maxLength:Real = {
+			initialLength - rope.woundLength
 		}
 
 		def update(dt:Float) {
-			val len = maxLength(rope.woundLength)
-			val freq = {
-				if (rope.outwardSpeed(node.body) > 0) frequency(len)
-				else eps
+			val diff = (node.position - contactNode.position)
+			val over = diff.length / maxLength
+			val impulse = diff.unit * (-10000*dt * over)
+			if (over > 1) {
+//				node.body.applyForceToCenter(impulse)
 			}
-			j.setLength(len)
-			j.setFrequency(freq)
+
+			val tension = actualLength / maxLength
+			if (tension > 1 + eps && ! node.isWoundUp && outwardSpeed > 0) {
+				j.setLength(maxLength)
+				j.setFrequency(baseFreq)
+			}
+			else {
+				j.setLength(maxLength * earlyTriggerRatio)
+				j.setFrequency(eps)
+			}
+		}
+
+		def render() {
+			val diff = (node.position - contactNode.position)
+
+			if (j.getFrequency > eps) Color.yellow.bind()
+			else Color.gray.bind()
+			gfx.vector(contactNode.body.getPosition, diff.unit * maxLength)
+
 		}
 	}
 
@@ -131,48 +252,14 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World) extends
 
 object Rope {
 
-	object Node {
-		val radius = 0.1f
-	}
-
-	class Node(val position:vec2)(implicit val world:World) extends Embodied with CircleShape {
-
-		val radius = Node.radius
-
-		def render() {
-			gfx.circle(radius)
-		}
-
-		lazy val body = {
-			val fixture = Embodied.defaults.fixtureDef
-			val bodydef = Embodied.defaults.bodyDef
-
-			bodydef.`type` = BodyType.DYNAMIC
-			bodydef.position = position
-			val body = world.createBody(bodydef)
-
-			val filter = new Filter
-			filter.categoryBits = 0x04
-			filter.maskBits = 0xff - 1
-
-			val circle = new shapes.CircleShape()
-			circle.m_radius = this.radius
-
-			fixture.shape = circle
-			fixture.restitution = 0f
-			fixture.userData = this
-			fixture.filter = filter
-
-			body.createFixture(fixture)
-			body
-		}
-	}
+	val radius = 0.075f
 
 	object Joint extends B2Implicits {
-		val freqHz = 20f
+		val freqHz = 30f
+		val freqHzTight = 80f
 		val damping = 0.5f
 
-		def stick(a:Node, b:Node, slackFactor:Float)(implicit world:World) = {
+		def stick(a:Rope#Node, b:Rope#Node, slackFactor:Float)(implicit world:World):DistanceJoint = {
 
 			val jd = new DistanceJointDef
 			jd.initialize(a.body, b.body, a.body.getPosition, b.body.getPosition)
@@ -180,7 +267,10 @@ object Rope {
 			jd.frequencyHz = Joint.freqHz
 			jd.dampingRatio = Joint.damping
 
-			world.createJoint(jd)
+			val j = world.createJoint(jd).asInstanceOf[DistanceJoint]
+			a._jointB = Some(j)
+			b._jointA = Some(j)
+			j
 		}
 
 		def weld(a:Body, b:Body, pos:vec2)(implicit world:World) = {

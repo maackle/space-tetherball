@@ -3,13 +3,14 @@ package tetherball.things
 import tetherball.Tetherball.Thing
 import skitch.vector.vec2
 import skitch.core.components.CircleShape
-import skitch.stage.box2d.Embodied
+import skitch.stage.box2d.{Embodied, ManagedEmbodied}
 import org.jbox2d.collision.shapes
 import org.jbox2d.dynamics.{World, Filter, BodyType}
+import tetherball.Tetherball
 
-class Pole(implicit val world:World) extends Thing with Embodied with CircleShape {
+class Pole(implicit val world:World) extends Thing with ManagedEmbodied with CircleShape {
 
-	val position = vec2.zero
+	val initialPosition = vec2.zero
 	val radius = 0.5f
 
 	def render() {
@@ -17,23 +18,26 @@ class Pole(implicit val world:World) extends Thing with Embodied with CircleShap
 	}
 
 	lazy val body = {
+		import Tetherball.Bits._
 		val fixture = Embodied.defaults.fixtureDef
 		val bodydef = Embodied.defaults.bodyDef
 
 		val circle = new shapes.CircleShape()
 		circle.m_radius = this.radius
-		fixture.shape = circle
 
 		bodydef.`type` = BodyType.STATIC
-		bodydef.position = position
+		bodydef.position = initialPosition
+		bodydef.linearDamping = 100f
 		val body = world.createBody(bodydef)
 
 		val filter = new Filter
-		filter.categoryBits = 0x04
-		filter.maskBits = 0xff - 1
+		filter.categoryBits = POLE_BIT
+		filter.maskBits = 0xffff
 
+		fixture.shape = circle
 		fixture.userData = this
 		fixture.filter = filter
+		fixture.restitution = 0f
 		body.createFixture(fixture)
 		body
 	}

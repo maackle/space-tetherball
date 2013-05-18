@@ -1,26 +1,30 @@
 package tetherball.things
 
 import tetherball.Tetherball.Thing
-import skitch.vector.vec2
+import skitch.vector.{vec, vec2}
 import org.jbox2d.dynamics._
 import tetherball.{Tetherball}
 import org.jbox2d.collision.shapes
 import skitch.core.components.CircleShape
 import skitch.gfx.{SpriteLike, Sprite}
-import skitch.core.{SkitchApp, ResourceLike}
-import skitch.stage.box2d.{B2World, Embodied}
+import skitch.core.{KeyHold, EventHandler, SkitchApp, ResourceLike}
+import skitch.stage.box2d.{Embodied, B2World, ManagedEmbodied}
+import skitch.core.EventSink
 
 object Ball {
 
 }
 
-class Ball(val position:vec2)(implicit val world:World, val app:SkitchApp) extends Thing with Sprite with Embodied with CircleShape {
+class Ball(initialPosition:vec2)(implicit val world:World, val app:SkitchApp) extends Thing with Sprite with ManagedEmbodied with CircleShape with EventSink {
 
 	val image = Tetherball.loader.image("img/ball.png")
 
 	def radius = dimensions.x / 2
 
 	lazy val body = {
+
+		import Tetherball.Bits._
+
 		val fixture = Embodied.defaults.fixtureDef
 		val bodydef = Embodied.defaults.bodyDef
 
@@ -29,17 +33,30 @@ class Ball(val position:vec2)(implicit val world:World, val app:SkitchApp) exten
 		fixture.shape = circle
 
 		bodydef.`type` = BodyType.DYNAMIC
-		bodydef.position = position
+		bodydef.position = initialPosition
 		val body = world.createBody(bodydef)
 
 		val filter = new Filter
-		filter.categoryBits = 0x04
-		filter.maskBits = 0xff - 1
+		filter.categoryBits = BALL_BIT
+		filter.maskBits = 0xffff & ~ROPE_NODE_BIT
 
 		fixture.userData = this
 		fixture.filter = filter
 		body.createFixture(fixture)
 		body
+	}
+
+	val thrustMagnitude = 60
+
+	val movementControls = new EventHandler({
+		case KeyHold(KEY_A)    => body.applyForce(vec(-thrustMagnitude, 0), position)
+		case KeyHold(KEY_D)    => body.applyForce(vec(+thrustMagnitude, 0), position)
+		case KeyHold(KEY_S)    => body.applyForce(vec(0, -thrustMagnitude), position)
+		case KeyHold(KEY_W)    => body.applyForce(vec(0, +thrustMagnitude), position)
+	})
+
+	listenTo {
+		movementControls
 	}
 
 }
