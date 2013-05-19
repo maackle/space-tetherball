@@ -28,8 +28,12 @@ class PlayState extends SkitchState(Tetherball) with B2World {
 
 	implicit val world:World = new World(new Vec2(0,0))
 
-	val velocityIterations = 40
-	val positionIterations = 30
+	val baseVelocityIterations = 10
+	val basePositionIterations = 3
+	val iterationIncrement = 100
+	val maxIterations = 500
+	var velocityIterations = baseVelocityIterations
+	var positionIterations = basePositionIterations
 
 	val backgroundColor = Some(Color(0x222222))
 
@@ -47,9 +51,12 @@ class PlayState extends SkitchState(Tetherball) with B2World {
 
 	val consoleThing = new Thing {
 
+		val font = new Font("font/UbuntuMono-R.ttf", 24)
+
 		def render() {
 			Color.white.bind()
-			gl.scale2(app.projectionScale)
+			font.drawString((velocityIterations, positionIterations).toString, vec(-2, -1))
+			font.drawString("%2.5f".format(rope.error), vec(-3, 5))
 		}
 
 		def update(dt:Float) {}
@@ -70,9 +77,17 @@ class PlayState extends SkitchState(Tetherball) with B2World {
 	private var paused = false
 	private var advance = false
 
+	val panning = 0.25f
+
 	listen {
 		case KeyHold(KEY_EQUALS) => camera.zoom *= 1.05f
 		case KeyHold(KEY_MINUS) => camera.zoom /= 1.05f
+
+		case KeyHold(KEY_J) => camera.position.x -= panning
+		case KeyHold(KEY_L) => camera.position.x += panning
+		case KeyHold(KEY_K) => camera.position.y -= panning
+		case KeyHold(KEY_I) => camera.position.y += panning
+
 		case KeyDown(KEY_SPACE) => paused = ! paused
 		case KeyDown(KEY_PERIOD) =>
 			if(paused) advance = true
@@ -81,8 +96,20 @@ class PlayState extends SkitchState(Tetherball) with B2World {
 	listenTo(guy, ball)
 
 	override def update(dt:Float) {
-		if(!paused || advance)
+
+		if(!paused || advance) {
+			if (rope.error > 0.025f) {
+				velocityIterations += iterationIncrement
+//				positionIterations += iterationIncrement
+			}
+			else {
+				velocityIterations = baseVelocityIterations
+//				positionIterations = basePositionIterations
+			}
+			velocityIterations = math.min(maxIterations, velocityIterations)
+//			positionIterations = math.min(maxIterations, positionIterations)
 			super.update(dt)
+		}
 		advance = false
 	}
 
