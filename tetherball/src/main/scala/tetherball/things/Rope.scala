@@ -24,6 +24,9 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 
 	val slackFactor = 1f
 
+	val initialLength = (ball.position - pole.position).length
+	val initialSpacing = initialLength / (numNodes - 1)
+
 	lazy val setup = {
 		val pole2ball = ball.position - pole.position
 		val direction = pole2ball.unit
@@ -48,7 +51,8 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 
 		val attachmentAngle = (poleNode.position - pole.position).angle
 
-		val contactNode = new Node(poleNode.position) // a dummy node which joins the ball to the pole directly
+		// a moving dummy node from which all `HardLimit`s are based
+		val contactNode = new Node(poleNode.position)
 		contactNode.body.setType(BodyType.KINEMATIC)
 
 		(poleNode, ballNode, innerNodes, allNodes, contactNode, attachmentAngle)
@@ -56,7 +60,7 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 
 	lazy val (poleNode, ballNode, innerNodes, allNodes, contactNode, attachmentAngle) = setup
 
-	val hardLimits = innerNodes.map(new HardLimit(_))
+	val hardLimits = (ballNode :: innerNodes).map(new HardLimit(_))
 
 	lazy val font = new Font("font/UbuntuMono-R.ttf", 24)
 
@@ -104,7 +108,7 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 		history << windingAngle.toFloat
 
 		gl.matrix {
-			gl.scale(1/50f, 1f)
+			gl.scale(1/50f, 0.5f)
 			gl.begin(GL11.GL_LINE_STRIP) {
 				for ((y, t) <- history.mem.zipWithIndex) {
 					gl.vertex(t, y + 2)
@@ -183,7 +187,7 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 
 			fixture.shape = circle
 			fixture.restitution = 0f
-			fixture.density = 2f
+			fixture.density = 1f
 			fixture.userData = this
 			fixture.filter = filter
 
@@ -195,9 +199,9 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 
 	class HardLimit(val node:Node) {
 
-		val initialLength = (contactNode.body.getPosition - node.body.getPosition).length
-		val baseFreq = 1000f
 		val earlyTriggerRatio = 0.95f
+		val initialLength = (contactNode.body.getPosition - node.body.getPosition).length * earlyTriggerRatio
+		val baseFreq = 30f
 		val eps = 1e-5f
 
 		val j = {
@@ -215,8 +219,18 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 
 		def actualLength:Real = (node.position - contactNode.position).length
 
+		val minLength:Real = rope.pole.radius * 2
+
 		def maxLength:Real = {
-			initialLength - rope.woundLength
+			math.max(0, initialLength - rope.woundLength)
+		}
+
+		val disabledFreq = eps
+
+		def activeFreq = baseFreq * (1 + 5*(initialLength - actualLength)/initialLength)
+
+		def active = {
+			actualLength > minLength && actualLength / maxLength > 1 && ! node.isWoundUp && outwardSpeed > 0
 		}
 
 		def update(dt:Float) {
@@ -227,14 +241,14 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 //				node.body.applyForceToCenter(impulse)
 			}
 
-			val tension = actualLength / maxLength
-			if (tension > 1 + eps && ! node.isWoundUp && outwardSpeed > 0) {
+
+			if (active) {
 				j.setLength(maxLength)
-				j.setFrequency(baseFreq)
+				j.setFrequency(activeFreq)
 			}
 			else {
 				j.setLength(maxLength * earlyTriggerRatio)
-				j.setFrequency(eps)
+				j.setFrequency(disabledFreq)
 			}
 		}
 
@@ -256,7 +270,7 @@ object Rope {
 
 	object Joint extends B2Implicits {
 		val freqHz = 30f
-		val freqHzTight = 80f
+		val freqHzTight = freqHz * 2
 		val damping = 0.5f
 
 		def stick(a:Rope#Node, b:Rope#Node, slackFactor:Float)(implicit world:World):DistanceJoint = {

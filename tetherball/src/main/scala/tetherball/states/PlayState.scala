@@ -1,6 +1,6 @@
 package tetherball.states
 
-import skitch.core.{View2D => PlainView2D, Render, SkitchApp, KeyDown}
+import skitch.core.{View2D => PlainView2D, _}
 import skitch.core.managed.{View2D, SkitchState}
 import tetherball.Tetherball
 import skitch.gfx.{Font, Sprite}
@@ -16,6 +16,10 @@ import tetherball.Tetherball.Thing
 import org.jbox2d.callbacks.{ContactImpulse, ContactListener}
 import org.jbox2d.dynamics.contacts.Contact
 import org.jbox2d.collision.Manifold
+import skitch.core.KeyDown
+import tetherball.things.FourDirections
+import scala.Some
+import skitch.core.KeyHold
 
 class PlayState extends SkitchState(Tetherball) with B2World {
 
@@ -29,15 +33,15 @@ class PlayState extends SkitchState(Tetherball) with B2World {
 
 	val backgroundColor = Some(Color(0x222222))
 
-	val arena = new Arena(app.windowRect.scaled(app.projectionScale))
+	val arena = new Arena(app.windowRect.scaled(app.projectionScale * 2))
 
 	val guy = new Player(vec(20, 20), FourDirections(KEY_LEFT, KEY_RIGHT, KEY_DOWN, KEY_UP))
 
-	val pole = new Pole
+	val pole = new Pole(0.6f)
 
-	val ball = new Ball(vec(0, 10))
+	val ball = new Ball(vec(0, 20))
 
-	val rope = new Rope(30, pole, ball)
+	val rope = new Rope(40, pole, ball)
 
 	val things = Set(pole, ball, rope, guy)
 
@@ -51,15 +55,36 @@ class PlayState extends SkitchState(Tetherball) with B2World {
 		def update(dt:Float) {}
 	}
 
-	val consoleView = View2D( consoleThing )
+	val camera = new Camera2D
+
+	val consoleView = View2D(new Camera2D)( Seq(consoleThing) )
+
+	val view = View2D(camera)(things)
 
 	val views = Seq(
-		View2D(things),
-		new B2DebugView(),
+		view,
+		new B2DebugView(camera),
 		consoleView
 	)
 
+	private var paused = false
+	private var advance = false
+
+	listen {
+		case KeyHold(KEY_EQUALS) => camera.zoom *= 1.05f
+		case KeyHold(KEY_MINUS) => camera.zoom /= 1.05f
+		case KeyDown(KEY_SPACE) => paused = ! paused
+		case KeyDown(KEY_PERIOD) =>
+			if(paused) advance = true
+	}
+
 	listenTo(guy, ball)
+
+	override def update(dt:Float) {
+		if(!paused || advance)
+			super.update(dt)
+		advance = false
+	}
 
 	object Contacter extends ContactListener {
 

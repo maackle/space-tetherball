@@ -7,11 +7,12 @@ import skitch.stage.box2d.{Embodied, ManagedEmbodied}
 import org.jbox2d.collision.shapes
 import org.jbox2d.dynamics.{World, Filter, BodyType}
 import tetherball.Tetherball
+import skitch.Types
+import Types._
 
-class Pole(implicit val world:World) extends Thing with ManagedEmbodied with CircleShape {
+class Pole(val radius:Real)(implicit val world:World) extends Thing with ManagedEmbodied with CircleShape {
 
 	val initialPosition = vec2.zero
-	val radius = 0.5f
 
 	def render() {
 
