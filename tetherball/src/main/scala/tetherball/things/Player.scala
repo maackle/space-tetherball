@@ -19,7 +19,7 @@ class Player(initialPosition:vec2, controls:FourDirections)(implicit val world:W
 
 	val image = Tetherball.loader.image("img/player.png")
 
-	val thrustMagnitude = 120
+	val thrustMagnitude = 300
 
 	def radius = dimensions.x / 2
 
