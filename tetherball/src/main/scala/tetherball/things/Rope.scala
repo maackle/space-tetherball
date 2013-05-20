@@ -47,6 +47,7 @@ class ControlPoint(initialPosition:vec2)(implicit world:World) extends ManagedEm
 
 		bodydef.`type` = BodyType.KINEMATIC
 		bodydef.position = initialPosition
+
 		val body = world.createBody(bodydef)
 
 		body
@@ -65,16 +66,12 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 
 	private val direction = (ball.position - pole.position).unit
 
-	object poleNode extends Node( pole.position + direction * (pole.radius + Rope.radius), 0 ) {
+	object poleNode extends Node( pole.position + direction * (pole.radius + Node.radius), 0 ) {
 		override def isTouching = true
 	}
-	object ballNode extends Node( ball.position - direction * (ball.radius + Rope.radius), numNodes-1 )
+	object ballNode extends Node( ball.position - direction * (ball.radius + Node.radius), numNodes-1 )
 
 	lazy val setup = {
-
-//
-//		val poleNode = new Node( pole.position + direction * (pole.radius + Rope.radius), 0 )
-//		val ballNode = new Node( ball.position - direction * (ball.radius + Rope.radius), numNodes-1 )
 
 		val numInnerNodes = numNodes - 2
 		val innerNodes = for(i <- List.range(1, numInnerNodes+1)) yield {
@@ -109,14 +106,14 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 	val nodePairs = for((a,b) <- helpers.pairs(allNodes)) yield NodePair(a, b)
 
 	val poleLimits = (innerNodes).map(new PoleLimit(_))
-	val tensionLimits = (innerNodes).map(new TensionLimit(_))
+//	val tensionLimits = (innerNodes).map(new TensionLimit(_))
 //	val ballLimits:Seq[HardLimit] = (innerNodes).map(new BallLimit(_))
 	val grandLimiter = new GrandLimit
 
 	val hardLimits = (
 	Seq(grandLimiter)
 	++: poleLimits
-	++: tensionLimits
+//	++: tensionLimits
 //	++: ballLimits
 	)
 
@@ -125,7 +122,7 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 	val history = helpers.MemFloat(500)
 
 	val interNodeWrappedAngle = {
-		val R = Rope.radius + pole.radius
+		val R = Node.radius + pole.radius
 		val L = initialSpacing
 		math.acos( (2*R*R - L*L) / (2*R*R) )
 	}
@@ -148,7 +145,7 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 	def windingDirection = math.signum(windingAngle)
 
 	def woundLength:Real = {
-		val r = pole.radius + Rope.radius
+		val r = pole.radius + Node.radius
 		math.abs(contactAngle.toFloat * r)
 	}
 
@@ -174,7 +171,7 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 	def isTautBy(extra:Float) = grandLimiter.isActive && realSlackLength > idealSlackLength * extra
 	def isTaut = grandLimiter.isActive && isLongerThanShouldBe
 
-	def isMerelyTight = grandLimiter.actualLength > grandLimiter.tightLength
+	def isMerelyTight = grandLimiter.actualLength > tightRange._1
 
 	def contactAngle: Radian = {
 		val wa = windingAngle
@@ -185,7 +182,9 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 		else 0.0
 	}
 
-	def contactPointPosition: vec2 = vec.polar(pole.radius + Rope.radius, contactAngle + attachmentAngle)
+	def tightRange = (grandLimiter.maxLength - 1.2f, grandLimiter.maxLength + 0.2f)
+
+	def contactPointPosition: vec2 = vec.polar(pole.radius + Node.radius, contactAngle + attachmentAngle)
 
 	def update(dt:Float) {
 		contactPoint.body.setTransform(contactPointPosition, 0)
@@ -199,16 +198,19 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 		Color(0xff00ff).bind()
 		gfx.circle(0.1f, contactPointPosition)
 
-		if(rope.isTaut) Color.red.bind()
+		if(false && rope.isTaut) Color.red.bind()
 		else Color.white.bind()
 		gl.lineWidth(2f)
 		gl.begin(GL11.GL_LINE_STRIP) {
-			allNodes.foreach(n => gl.vertex(n.position))
+			allNodes.foreach(n => gl.vertex(n.renderPosition))
 		}
 		gl.lineWidth(1f)
 
-		allNodes.foreach(_.render())
+//		allNodes.foreach(_.render())
+
 //		hardLimits.foreach(_.render())
+//		tensionLimits.foreach(_.render())
+//		grandLimiter.render()
 
 		history << windingAngle.toFloat
 
@@ -222,9 +224,15 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 		}
 	}
 
+	object Node {
+
+		val radius = 0.075f
+		val density = 0.75f
+	}
+
 	class Node(initialPosition:vec2, val ordinal:Int)(implicit val world:World) extends ManagedEmbodied with CircleShape {
 
-		val radius = Rope.radius
+		val radius = Node.radius
 		private[Rope] var _touching = false
 		private[Rope] var _jointA, _jointB: Option[Joint] = None
 		private[Rope] var _windAngle = 0.0
@@ -266,9 +274,21 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 				}
 				// this used to be an attempt to modify the position directly -- totally unstable.
 				if (isTouching && math.abs(windAngle) > maxWindAngle) {
-					val ideal = vec.polar(Rope.radius + rope.pole.radius, rope.windingDirection * maxWindAngle + poleNode.position.angle)
+					val ideal = vec.polar(Node.radius + rope.pole.radius, rope.windingDirection * maxWindAngle + poleNode.position.angle)
 
 				}
+			}
+		}
+
+		def renderPosition = {
+			if (isTouching && isBehindContactNode) position
+			else {
+				val (lo, hi) = tightRange
+				val ratio = {
+					(grandLimiter.actualLength() - lo) / (hi - lo)
+				}
+				val clampedRatio = math.max(0, math.min(1, ratio))
+				vec.lerp(position, projectedPosition, clampedRatio)
 			}
 		}
 
@@ -281,7 +301,7 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 				gl.fill(false)
 				Color.yellow.bind()
 			}
-			gfx.circle(radius, position)
+			gfx.circle(radius, renderPosition)
 			Color.black.bind()
 			gfx.vector(position, velocity / 50)
 		}
@@ -303,7 +323,7 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 
 			fixture.shape = circle
 			fixture.restitution = 0f
-			fixture.density = 1f
+			fixture.density = Node.density
 			fixture.userData = this
 			fixture.filter = filter
 
@@ -343,11 +363,16 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 
 	class GrandLimit extends PoleLimit(ballNode) {
 
+		override val activeColor = Color.cyan
 		override val minLength:Real = 0f
-		override val baseFreq = 20f
-		override val damping = 0.1f
+		override val baseFreq = 60f
+		override val damping = 0.0f
 
-		def tightLength = maxLength - 0.1f
+		override def render() {
+			gl.lineWidth(2f)
+			super.render()
+			gl.lineWidth(1f)
+		}
 
 	}
 
@@ -398,37 +423,30 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 	}
 
 	class TensionLimit(node:Node) extends {
-//	class TensionLimit(poleLimit:PoleLimit) extends {
 		val control = new ControlPoint(node.position)
 	} with HardLimit(control, node) {
 
 		val activeColor = Color.yellow
 
-		def ratio = {
-			(grandLimiter.actualLength() - grandLimiter.tightLength) / (grandLimiter.maxLength - grandLimiter.tightLength)
-		}
-		def clampedRatio = math.max(0, math.min(1, ratio))
+		def baseFreq = 0f
+		val damping = 0f
 
-		def baseFreq = 3f * (clampedRatio + eps)
-		val damping = 0.0f
-
-		val minLength = 0.005f
+		val minLength = 0.0f
 		val maxLength = 0f
 
 		def individuallyActive = ! node.isBehindContactNode && ! node.isTouching && actualLength > minLength
-		def isActive = (rope.isMerelyTight) && individuallyActive
+		def isActive = (rope.isTaut) && individuallyActive
 
 		override def update(dt:Float) {
 			super.update(dt)
-			val place = vec.lerp(node.position, node.projectedPosition, clampedRatio)
-			control.body.setTransform(place, 0f)
+			control.body.setTransform(node.projectedPosition, 0f)
 		}
 
 		override def render() {
 			super.render()
 			if(individuallyActive) {
 				Color.green.bind()
-				gfx.circle(radius/2, control.position)
+				gfx.circle(Node.radius/2, control.position)
 			}
 		}
 	}
@@ -499,7 +517,7 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 		def render() {
 			val diff = (node.position - anchorNode.position)
 
-			if (j.getFrequency > eps) activeColor.bind()
+			if (isActive) activeColor.bind()
 			else disabledColor.bind()
 			gfx.vector(anchorNode.body.getPosition, diff.unit * maxLength)
 		}
@@ -508,8 +526,6 @@ class Rope(numNodes:Int, pole:Pole, val ball:Ball)(implicit world:World, app:Ski
 }
 
 object Rope {
-
-	val radius = 0.075f
 
 	object JointFactory extends B2Implicits {
 		val freqHz = 0f
