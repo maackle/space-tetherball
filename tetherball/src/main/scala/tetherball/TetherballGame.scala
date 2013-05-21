@@ -1,12 +1,12 @@
 package tetherball
 
-import skitch.core.{ResourceLoader, SkitchApp}
+import skitch.core.{Update, ResourceLoader, SkitchApp}
 import tetherball.states.PlayState
 import java.io.File
 import grizzled.slf4j.Logging
 import org.lwjgl.input.Keyboard
 
-object Tetherball extends SkitchApp with Logging { self =>
+object TetherballGame extends SkitchApp with Logging { self =>
 
 	def initialize = { info("app starting") }
 	def cleanup = { info("app closing") }
@@ -29,4 +29,39 @@ object Tetherball extends SkitchApp with Logging { self =>
 	abstract class Thing extends skitch.core.managed.Thing
 
 	run()
+}
+
+object Winding extends Enumeration {
+	val CW = Value(-1)
+	val CCW = Value(1)
+}
+
+class Countdown(seconds:Float)(onTimeout: =>Unit) extends Update {
+	private var t = 0f
+
+	def update(dt:Float) {
+		if (isRunning) {
+			t -= dt
+			if (t <= 0) {
+				onTimeout
+			}
+		}
+		else {
+			t = 0
+		}
+	}
+
+	def isRunning = t > 0
+
+	def elapsed = seconds - t
+
+	def completion = {
+		1 - t / seconds
+	}
+
+	def start() {
+		if( ! isRunning ) {
+			t = seconds
+		}
+	}
 }

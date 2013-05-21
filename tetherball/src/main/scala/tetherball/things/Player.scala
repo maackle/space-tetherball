@@ -2,33 +2,91 @@ package tetherball.things
 
 import skitch.gfx.Sprite
 import skitch.core._
-import tetherball.{Tetherball}
+import tetherball.{Countdown, TetherballGame}
 import skitch.vector.{vec, vec2}
-import tetherball.Tetherball.Thing
+import tetherball.TetherballGame.Thing
 import org.jbox2d.collision.shapes
 import org.jbox2d.dynamics.{World, Filter, BodyType}
 import skitch.core.components.CircleShape
 import skitch.stage.box2d.{Embodied, ManagedEmbodied}
 import skitch.core.KeyHold
+import tetherball.things.Player.Controls
+import tetherball.TetherballGame.Bits._
+import skitch.core.KeyHold
+import tetherball.things.Player.Controls
 
-case class FourDirections(left:Int, right:Int, down:Int, up:Int)
+object Player {
 
-class Player(initialPosition:vec2, controls:FourDirections)(implicit val world:World) extends Thing with ManagedEmbodied with Sprite with CircleShape with EventSink {
+	case class Controls(left:Int, right:Int, down:Int, up:Int, act:Int)
 
-	val app = Tetherball
+}
 
-	val image = Tetherball.loader.image("img/player.png")
+class Player(initialPosition:vec2, controls:Controls)(implicit val world:World) extends Physical with ManagedEmbodied with Sprite with CircleShape with EventSink {
+
+	val app = TetherballGame
+
+	val image = TetherballGame.loader.image("img/player.png")
 
 	val thrustMagnitude = 300
 
-	def radius = dimensions.x / 2
+	val initialRadius = dimensions.x / 2
+
+	var _radius = initialRadius
+
+	def radius = _radius
+
+	object Puff {
+		val recoveryTime = 2f
+		val expansion = 3f
+		val timeWindow = 0.2f
+		val timer = new Countdown(recoveryTime)(())
+
+		def isActive = timer.elapsed < timeWindow
+
+		def isRecovering = timer.isRunning
+
+		def ratio = (1 - timer.completion)
+
+		def power = {
+			val base = 0.5f
+			val magnitude = 100f
+			magnitude * ( base + (1-base) * ratio )
+		}
+
+		def activate() {
+			timer.start()
+		}
+
+		def update(dt:Float) {
+			timer.update(dt)
+			if(isRecovering) {
+				if(app.ticks % 2 == 0) {
+					body.destroyFixture(body.getFixtureList)
+					_radius = initialRadius + (expansion - 1) * (ratio)
+					body.createFixture(fixtureDef)
+				}
+			}
+		}
+	}
+
 
 	val movementControls = new EventHandler({
 		case KeyHold(controls.left)     => body.applyForce(vec(-thrustMagnitude, 0), position)
 		case KeyHold(controls.right)    => body.applyForce(vec(+thrustMagnitude, 0), position)
 		case KeyHold(controls.down)     => body.applyForce(vec(0, -thrustMagnitude), position)
 		case KeyHold(controls.up)       => body.applyForce(vec(0, +thrustMagnitude), position)
+		case KeyHold(controls.act) =>
+			Puff.activate()
 	})
+
+	def doPuff() {
+
+	}
+
+	override def update(dt:Float) {
+		super.update(dt)
+		Puff.update(dt)
+	}
 
 	listenTo {
 		movementControls
@@ -36,27 +94,33 @@ class Player(initialPosition:vec2, controls:FourDirections)(implicit val world:W
 
 	lazy val body = {
 
-		import Tetherball.Bits._
+		import TetherballGame.Bits._
 
-		val fixture = Embodied.defaults.fixtureDef
 		val bodydef = Embodied.defaults.bodyDef
 
 		bodydef.`type` = BodyType.DYNAMIC
 		bodydef.position = initialPosition
 
+		val body = world.createBody(bodydef)
+		body.createFixture(fixtureDef)
+		body
+	}
+
+	private val _fixtureDef = Embodied.defaults.fixtureDef
+
+	protected def fixtureDef = {
 		val circle = new shapes.CircleShape()
 		circle.m_radius = this.radius
-		fixture.shape = circle
+		_fixtureDef.shape = circle
 
 		val filter = new Filter
 		filter.categoryBits = PLAYER_BIT
 		filter.maskBits = 0xff & ~ROPE_NODE_BIT
 
-		fixture.restitution = 0.5f
-		fixture.userData = this
-		fixture.filter = filter
-		val body = world.createBody(bodydef)
-		body.createFixture(fixture)
-		body
+		_fixtureDef.restitution = 0.5f
+		_fixtureDef.userData = this
+		_fixtureDef.filter = filter
+
+		_fixtureDef
 	}
 }

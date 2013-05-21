@@ -6,11 +6,35 @@ import org.jbox2d.dynamics.{Filter, BodyType, World}
 import skitch.stage.box2d.{Embodied, ManagedEmbodied}
 import skitch.vector.{vec, vec2}
 import org.jbox2d.collision.shapes
-import skitch.core.Rect
+import skitch.core.{SkitchApp, Update, EventSink, Rect}
+import tetherball.Winding
 
-class Arena(width:Real, height:Real)(implicit world:World) {
+class Arena(rect:Rect)(teams:(Team, Team), tether:Tether)(implicit val app:SkitchApp, world:World) extends Update with EventSink {
 
-	def this(rect:Rect)(implicit world:World) = this(rect.width, rect.height)(world)
+	def pole = tether.pole
+	def ball = tether.ball
+
+	def teamCW = teams._1
+	def teamCCW = teams._2
+
+	def players = teamCW.players ++ teamCCW.players
+
+	def update(dt:Float) {
+
+	}
+
+	def checkVictory() {
+		def isWrappedUp = tether.wrappedRatio > 0.90f
+
+		if (isWrappedUp) {
+			declareVictor(tether.winding)
+		}
+	}
+
+	def declareVictor(winding:Winding.Value) {
+		warn("TODO")
+	}
+
 
 	class EdgeBody(a:vec2, b:vec2) extends Embodied {
 		val position = (a+b)/2
@@ -41,12 +65,14 @@ class Arena(width:Real, height:Real)(implicit world:World) {
 		}
 	}
 
+	listenTo(players : _*)
+
 	class Wall(a:vec2, b:vec2) extends EdgeBody(a,b)
 
 	val walls = {
 
-		val x = width / 2
-		val y = height / 2
+		val x = rect.width / 2
+		val y = rect.height / 2
 		val corners = Seq(
 			vec(-x, -y), vec(x, -y), vec(x, y), vec(-x, y)
 		)

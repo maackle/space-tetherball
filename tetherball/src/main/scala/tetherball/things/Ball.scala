@@ -1,9 +1,9 @@
 package tetherball.things
 
-import tetherball.Tetherball.Thing
+import tetherball.TetherballGame.Thing
 import skitch.vector.{vec, vec2}
 import org.jbox2d.dynamics._
-import tetherball.{Tetherball}
+import tetherball.{TetherballGame}
 import org.jbox2d.collision.shapes
 import skitch.core.components.CircleShape
 import skitch.gfx.{SpriteLike, Sprite}
@@ -15,15 +15,15 @@ object Ball {
 
 }
 
-class Ball(initialPosition:vec2)(implicit val world:World, val app:SkitchApp) extends Thing with Sprite with ManagedEmbodied with CircleShape with EventSink {
+class Ball(initialPosition:vec2)(implicit val world:World, val app:SkitchApp) extends Physical with Sprite with ManagedEmbodied with CircleShape with EventSink {
 
-	val image = Tetherball.loader.image("img/ball.png")
+	val image = TetherballGame.loader.image("img/ball.png")
 
 	def radius = dimensions.x / 2
 
 	lazy val body = {
 
-		import Tetherball.Bits._
+		import TetherballGame.Bits._
 
 		val fixture = Embodied.defaults.fixtureDef
 		val bodydef = Embodied.defaults.bodyDef
@@ -49,10 +49,10 @@ class Ball(initialPosition:vec2)(implicit val world:World, val app:SkitchApp) ex
 	val thrustMagnitude = 60
 
 	val movementControls = new EventHandler({
-		case KeyHold(KEY_A)    => body.applyForce(vec(-thrustMagnitude, 0), position)
-		case KeyHold(KEY_D)    => body.applyForce(vec(+thrustMagnitude, 0), position)
-		case KeyHold(KEY_S)    => body.applyForce(vec(0, -thrustMagnitude), position)
-		case KeyHold(KEY_W)    => body.applyForce(vec(0, +thrustMagnitude), position)
+		case KeyHold(KEY_A) => body.applyForce(vec(-thrustMagnitude, 0), position)
+		case KeyHold(KEY_D) => body.applyForce(vec(+thrustMagnitude, 0), position)
+		case KeyHold(KEY_S) => body.applyForce(vec(0, -thrustMagnitude), position)
+		case KeyHold(KEY_W) => body.applyForce(vec(0, +thrustMagnitude), position)
 	})
 
 	listenTo {
