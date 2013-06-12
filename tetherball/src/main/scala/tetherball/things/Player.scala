@@ -14,6 +14,7 @@ import tetherball.things.Player.Controls
 import tetherball.TetherballGame.Bits._
 import skitch.core.KeyHold
 import tetherball.things.Player.Controls
+import skitch.{Color, gfx}
 
 object Player {
 
@@ -21,7 +22,7 @@ object Player {
 
 }
 
-class Player(initialPosition:vec2, controls:Controls)(implicit val world:World) extends Physical with ManagedEmbodied with Sprite with CircleShape with EventSink {
+class Player(initialPosition:vec2, controls:Controls)(implicit val world:World) extends Physical with ManagedEmbodied with CircleShape with EventSink {
 
 	val app = TetherballGame
 
@@ -29,11 +30,13 @@ class Player(initialPosition:vec2, controls:Controls)(implicit val world:World) 
 
 	val thrustMagnitude = 300
 
-	val initialRadius = dimensions.x / 2
+	val initialRadius = 1.5f
 
 	var _radius = initialRadius
 
 	def radius = _radius
+
+	def color = Color.magenta
 
 	object Puff {
 		val recoveryTime = 2f
@@ -81,6 +84,11 @@ class Player(initialPosition:vec2, controls:Controls)(implicit val world:World) 
 
 	def doPuff() {
 
+	}
+
+	def render() {
+		color.bind()
+		gfx.circle(radius)
 	}
 
 	override def update(dt:Float) {
