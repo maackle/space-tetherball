@@ -44,7 +44,6 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 
 	val tether = new Tether(40, pole, ball)
 
-	val things = Set(pole, ball, tether, player1, player2)
 
 	val consoleThing = new Thing {
 
@@ -61,22 +60,24 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 
 	val camera = new Camera2D
 
-	val consoleView = View2D(new Camera2D)( Seq(consoleThing) )
-
-	val view = View2D(camera)(things)
-
-	val views = Seq(
-		view,
-		new B2DebugView(camera)
-//		consoleView
-	)
-
 	val teams = (
 		Team(Winding.CW, Seq(player1)),
 		Team(Winding.CCW, Seq(player2))
 	)
 
-	val arena = new Arena(app.windowRect.scaled(app.projectionScale * 2))(teams, tether)
+	val arena = new Arena(app.windowRect.scaled(app.projectionScale * 2), camera)(teams, tether)
+
+	def things = Seq(arena) ++ arena.things
+
+	val view = arena.view
+
+	val consoleView = View2D(new Camera2D)( Seq(consoleThing) )
+
+	val views = Seq(
+		view,
+		new B2DebugView(camera)
+		//		consoleView
+	)
 
 	private var paused = false
 	private var advance = false
@@ -93,8 +94,8 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 		case KeyHold(KEY_I) => camera.position.y += panning
 
 		case KeyDown(KEY_NUMPAD0) =>
-			app.pushState(new PauseState(this))
-//			paused = ! paused
+//			app.pushState(new PauseState(this))
+			paused = ! paused
 		case KeyDown(KEY_PERIOD) =>
 			if(paused) advance = true
 	}
