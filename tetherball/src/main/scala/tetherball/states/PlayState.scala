@@ -119,6 +119,7 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 			def player_other(player:Player, other:Physical) {
 				if (other.body.getType == BodyType.DYNAMIC && player.Puff.isActive)
 					other.takePuff(player)
+				player.SFX.hit.play(true)
 			}
 
 			def pole_ball(pole:Pole, ball:Ball) {

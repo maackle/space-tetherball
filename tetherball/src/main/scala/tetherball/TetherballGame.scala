@@ -5,14 +5,22 @@ import tetherball.states.PlayState
 import java.io.File
 import grizzled.slf4j.Logging
 import org.lwjgl.input.Keyboard
+import skitch.audio.SoundSystem
 
 object TetherballGame extends SkitchApp with Logging { self =>
 
-	def initialize = { info("app starting") }
-	def cleanup = { info("app closing") }
+	def initialize = {
+		info("app starting")
+		SoundSystem.initialize()
+		loader.autoload()
+	}
+
+	def cleanup = {
+		info("app closing")
+		SoundSystem.destroy()
+	}
 
 	val loader = new ResourceLoader(new File("tetherball/src/main/resources"))
-
 	val initialWindowSize = Some(1200, 1200)
 	val windowTitle = "space tetherball"
 	lazy val startState = new PlayState

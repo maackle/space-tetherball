@@ -14,6 +14,7 @@ import tetherball.things.Player.Controls
 import tetherball.TetherballGame.Bits._
 import skitch.core.KeyHold
 import tetherball.things.Player.Controls
+import skitch.audio.Sound
 
 object Player {
 
@@ -69,6 +70,10 @@ class Player(initialPosition:vec2, controls:Controls)(implicit val world:World) 
 		}
 	}
 
+	object SFX {
+		val hit = new Sound(TetherballGame.loader.ogg("snd/bump.ogg"))
+		val ow = new Sound(TetherballGame.loader.ogg("snd/ow.ogg"))
+	}
 
 	val movementControls = new EventHandler({
 		case KeyHold(controls.left)     => body.applyForce(vec(-thrustMagnitude, 0), position)
