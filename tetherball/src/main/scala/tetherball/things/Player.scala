@@ -7,15 +7,16 @@ import skitch.vector.{vec, vec2}
 import tetherball.TetherballGame.Thing
 import org.jbox2d.collision.shapes
 import org.jbox2d.dynamics.{World, Filter, BodyType}
-import skitch.core.components.CircleShape
+import skitch.core.components.{Position2D, CircleShape}
 import skitch.stage.box2d.{Embodied, ManagedEmbodied}
 import skitch.core.KeyHold
 import tetherball.things.Player.Controls
 import tetherball.TetherballGame.Bits._
 import skitch.core.KeyHold
 import tetherball.things.Player.Controls
-import skitch.{gfx, Color}
+import skitch.{gl, gfx, Color}
 import skitch.audio.Sound
+import tetherball.states.PlayState
 
 
 object Player {
@@ -24,7 +25,7 @@ object Player {
 
 }
 
-class Player(initialPosition:vec2, controls:Controls)(implicit val world:World) extends Physical with ManagedEmbodied with CircleShape with EventSink {
+class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, world:World) extends Physical with ManagedEmbodied with CircleShape with EventSink { player =>
 
 	val app = TetherballGame
 
@@ -39,6 +40,31 @@ class Player(initialPosition:vec2, controls:Controls)(implicit val world:World) 
 	def radius = _radius
 
 	def color = Color.magenta
+
+	object OffScreenMarker extends Thing {
+
+		def update(dt:Float) {}
+
+		def render() {
+			val view = state.arena.view
+			val rect = view.viewportRect
+			if ( ! rect.hitTest(player.position) ) { // offscreen
+				val angle = math.abs(player.position.angle % Math.PI)
+				val refAngle = if (angle < Math.PI / 2) {
+					angle
+				} else {
+					Math.PI - angle
+				}
+				val w = (refAngle / Math.PI)
+				val r = ( w * rect.height + (1 - w) * rect.width ) / 2
+				val position = vec.polar(r, player.position.angle)
+				Color.green.bind()
+				gl.fill(true)
+				gfx.circle(1f, position)
+			}
+		}
+	}
+
 
 	object Puff {
 		val recoveryTime = 2f

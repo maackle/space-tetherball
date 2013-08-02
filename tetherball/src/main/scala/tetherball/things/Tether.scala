@@ -184,17 +184,12 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 
 		allNodes.foreach(_.render())
 
-//		hardLimits.foreach(_.render())
-//		tensionLimits.foreach(_.render())
-//		grandLimiter.render()
-
-
-		Color(0x555555).bind()
-		drawGraph(memWindingAngle)
-		Color(0x550055).bind()
-		drawGraph(memRealSlackLength)
-		Color(0x660022).bind()
-		drawGraph(memIdealSlackLength)
+//		Color(0x555555).bind()
+//		drawGraph(memWindingAngle)
+//		Color(0x550055).bind()
+//		drawGraph(memRealSlackLength)
+//		Color(0x660022).bind()
+//		drawGraph(memIdealSlackLength)
 	}
 
 	def drawGraph(mem:Memory[Float]) {

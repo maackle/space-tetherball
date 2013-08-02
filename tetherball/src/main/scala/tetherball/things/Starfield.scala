@@ -7,11 +7,9 @@ import skitch.Color
 import org.lwjgl.opengl.GL11
 import skitch.core.Rect
 
-class Starfield extends Thing {
+class Starfield(N:Int, R:Float) extends Thing {
 
 	val r = 0.01f
-	val R = 100f
-	val N = 3000
 	val starPoints = for {
 		i <- (0 to N)
 		c = vec.polar.random(R)
