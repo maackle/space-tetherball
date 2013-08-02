@@ -6,7 +6,7 @@ import tetherball.{Winding, TetherballGame}
 import skitch.gfx.{Font, Sprite}
 import skitch.{gl, Types, Color}
 import tetherball.things._
-import skitch.vector.vec
+import skitch.vector.{vec2, vec}
 import org.jbox2d.dynamics.{BodyType, World}
 import org.jbox2d.common.Vec2
 import skitch.stage.box2d.{Embodied, B2DebugView, B2World}
@@ -42,8 +42,9 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 
 	val ball = new Ball(vec(0, 20))
 
-	val tether = new Tether(40, pole, ball)
+	val starfield = new Starfield
 
+	val tether = new Tether(40, pole, ball)
 
 	val consoleThing = new Thing {
 
@@ -65,9 +66,9 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 		Team(Winding.CCW, Seq(player2))
 	)
 
-	val arena = new Arena(app.windowRect.scaled(app.projectionScale * 2), camera)(teams, tether)
+	val arena = new Arena(Rect(vec2.zero, app.windowRect.width * 2 * app.worldScale, app.windowRect.height * 2 * app.worldScale), camera)(teams, tether)
 
-	def things = Seq(arena) ++ arena.things
+	def things = Seq(arena)// ++ arena.things
 
 	val view = arena.view
 
@@ -75,6 +76,8 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 
 	val views = Seq(
 		view,
+		View2D(camera)(Seq(arena)),
+		View2D(camera)(Seq(starfield)),
 		new B2DebugView(camera)
 		//		consoleView
 	)

@@ -1,6 +1,6 @@
 package tetherball.things
 
-import skitch.{helpers, Types}
+import skitch.{Color, helpers, Types}
 import Types._
 import org.jbox2d.dynamics.{Filter, BodyType, World}
 import skitch.stage.box2d.{Embodied, ManagedEmbodied}
@@ -26,35 +26,37 @@ class Arena(rect:Rect, camera:Camera2D)(teams:(Team, Team), tether:Tether)(impli
 	def players = teamCW.players ++ teamCCW.players
 
 	def distance(t:Position2D) = (t.position - pole.position).length
-	def onScreen(p:vec2) = view.windowBounds.hitTest(view.toScreen(p))
+	def zoomBounds(scale:Float) = view.viewportRect.scaled(scale)
+	def onScreen(scale:Float, p:vec2) = zoomBounds(scale).hitTest(p)
 
 	val things = players ++ Seq(pole, ball, tether)
 
 	val view = View2D(camera)(things)
 
 	def update(dt:Float) {
-		val bounds = view.windowBounds.scaled(1.25f)
+		val autozoomSpeed = 0.01f
+		things.foreach(_.update(dt))
 		val moving = (players :+ ball)
-		val (near, far) = moving.partition( t => bounds.hitTest(view.toScreen(t.position)) )
+		val (near, far) = moving.partition( t => onScreen(0.75f, t.position) )
 		if (far.isEmpty) {
-			view.camera.zoom *= 1.01f
+			view.camera.zoom *= 1 + autozoomSpeed
 		}
 		else {
 			val notTooFar = far.filter(distance(_) < maxDistanceForZoom)
 			if (! notTooFar.isEmpty) {
 				furthestPoint = (notTooFar).maxBy(distance(_)).position
-				if(! onScreen(furthestPoint)) {
-					view.camera.zoom *= 0.99f
+				if(! onScreen(0.85f, furthestPoint)) {
+					view.camera.zoom /= 1 + autozoomSpeed
 				}
 			}
 
 		}
 
-
 	}
 
 	def render() {
-		things.foreach(_.render())
+		Color(0x000022).bind()
+		skitch.gfx.rect(zoomBounds(0.8f))
 	}
 
 	def checkVictory() {

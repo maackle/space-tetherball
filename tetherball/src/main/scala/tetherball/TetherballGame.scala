@@ -7,7 +7,7 @@ import grizzled.slf4j.Logging
 import org.lwjgl.input.Keyboard
 import skitch.audio.SoundSystem
 
-object TetherballGame extends SkitchApp with Logging { self =>
+object TetherballGame extends SkitchApp with App with Logging { self =>
 
 	def initialize = {
 		info("app starting")
@@ -24,7 +24,7 @@ object TetherballGame extends SkitchApp with Logging { self =>
 	val initialWindowSize = Some(1200, 1200)
 	val windowTitle = "space tetherball"
 	lazy val startState = new PlayState
-	val projectionScale = 1f / 30f
+	val worldScale = 1f / 30f
 	val fps = 60
 
 	object Bits {
