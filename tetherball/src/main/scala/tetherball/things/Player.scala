@@ -1,6 +1,6 @@
 package tetherball.things
 
-import skitch.gfx.Sprite
+import skitch.gfx.{Image, Sprite}
 import skitch.core._
 import skitch.Types._
 import tetherball.{Countdown, TetherballGame}
@@ -173,7 +173,9 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
       def rotation = player.rotation
       def position = player.position
       val scaling = vec2.one
-      val image = TetherballGame.loader.image("img/chevron-right.png", origin=vec2(23,40), blitColor=player.color)
+      val image = TetherballGame.loader.image("img/chevron-right.png") { tex =>
+        Image(tex, origin=vec2(23,40), blitColor=player.color)
+      }
     }
 
     val chevrons = Seq(new Chevron, new Chevron, new Chevron)

@@ -17,7 +17,7 @@ object Ball {
 
 class Ball(initialPosition:vec2)(implicit val world:World, val app:SkitchApp) extends Physical with Sprite with ManagedEmbodied with CircleShape with EventSink {
 
-	val image = TetherballGame.loader.image("img/ball.png")
+	val image = TetherballGame.loader.image("img/ball.png")()
 
 	def radius = dimensions.x / 2
 
