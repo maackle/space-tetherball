@@ -21,7 +21,10 @@ import skitch.core.KeyHold
 
 class PlayState extends SkitchState(TetherballGame) with B2World {
 
-	def onEnter = { world.setContactListener(Contacter) }
+	def onEnter = {
+    world.setContactListener(Contacter)
+    TetherballGame.loader.loadAll()
+  }
 	def onExit = { world.setContactListener(null) }
 
 	implicit val world:World = new World(new Vec2(0,0))

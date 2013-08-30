@@ -83,6 +83,8 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
 		val ow = new Sound(TetherballGame.loader.ogg("snd/ow.ogg"))
 	}
 
+  SFX  // load it right away
+
 	val movementControls = new EventHandler({
 		case KeyHold(controls.left)     => body.applyForce(vec(-thrustMagnitude, 0), position)
 		case KeyHold(controls.right)    => body.applyForce(vec(+thrustMagnitude, 0), position)
@@ -144,6 +146,7 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
 
   object OffScreenMarker extends Thing with AutoAffine2D with Update {
 
+    val chevrons = Seq(new Chevron, new Chevron, new Chevron)
     def arenaViewport = state.arena.view.viewportRect
     def HUDViewport = state.HUDView.viewportRect
 
@@ -177,8 +180,6 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
         Image(tex, origin=vec2(23,40), blitColor=player.color)
       }
     }
-
-    val chevrons = Seq(new Chevron, new Chevron, new Chevron)
 
     def update(dt:Float) {
       for ((chevron, i) <- chevrons.zipWithIndex) {
