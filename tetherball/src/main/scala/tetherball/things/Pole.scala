@@ -22,7 +22,7 @@ class Pole(val radius:Real)(implicit val world:World) extends Physical with Mana
 	}
 
 	lazy val body = {
-		import TetherballGame.Bits._
+		import TetherballGame.CollisionBits._
 		val fixture = Embodied.defaults.fixtureDef
 		val bodydef = Embodied.defaults.bodyDef
 

@@ -21,13 +21,13 @@ object TetherballGame extends SkitchApp with App with Logging { self =>
 	}
 
 	val loader = new ResourceLoader(new File("tetherball/src/main/resources"))
-	val initialWindowSize = Some(1200, 1200)
+	val initialWindowSize = Some(1600, 1200)
 	val windowTitle = "space tetherball"
 	lazy val startState = new PlayState
 	val worldScale = 1f / 30f
 	val fps = 60
 
-	object Bits {
+	object CollisionBits {
 		val POLE_BIT = 0x01
 		val ROPE_NODE_BIT = 0x02
 		val BALL_BIT = 0x04

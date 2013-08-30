@@ -14,7 +14,7 @@ import Types._
 import skitch.gfx.Font
 import skitch.core.SkitchApp
 import org.lwjgl.opengl.GL11
-import tetherball.TetherballGame.Bits._
+import tetherball.TetherballGame.CollisionBits._
 import scala.Some
 import skitch.helpers.{Memory, OncePerFrame}
 import skitch.Types.Radian
@@ -123,9 +123,9 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 		}).sum
 	}
 
-	def realSlackLength = realLength() - idealWoundLength
+	def realSlackLength:Real = realLength() - idealWoundLength
 
-	def idealSlackLength = initialLength - idealWoundLength
+	def idealSlackLength:Real = initialLength - idealWoundLength
 
 	def error = {
 		(for( p <- nodePairs ) yield {

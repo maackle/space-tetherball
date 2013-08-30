@@ -23,7 +23,7 @@ class Ball(initialPosition:vec2)(implicit val world:World, val app:SkitchApp) ex
 
 	lazy val body = {
 
-		import TetherballGame.Bits._
+		import TetherballGame.CollisionBits._
 
 		val fixture = Embodied.defaults.fixtureDef
 		val bodydef = Embodied.defaults.bodyDef

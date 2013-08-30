@@ -12,9 +12,8 @@ import skitch.core._
 import tetherball.TetherballGame.Thing
 import skitch.core.components.Position2D
 
-class Arena(rect:Rect, camera:Camera2D)(teams:(Team, Team), tether:Tether)(implicit val app:SkitchApp, world:World) extends Thing with ThingManager with EventSink  {
+class Arena(rect:Rect)(teams:(Team, Team), tether:Tether)(implicit val app:SkitchApp, world:World) extends Thing with ThingManager with EventSink  {
 
-	val maxDistanceForZoom = 40f
 	private var furthestPoint = vec2.zero
 
 	def pole = tether.pole
@@ -31,34 +30,18 @@ class Arena(rect:Rect, camera:Camera2D)(teams:(Team, Team), tether:Tether)(impli
 
 	val things = players ++ players.map(_.OffScreenMarker) ++ Seq(pole, ball, tether)
 
-	val view = View2D(camera)(things)
+	val view:View2D = View2D(camera)(players ++ Seq(pole, ball, tether))
 
-	def autozoom() = {
-		val autozoomSpeed = 0.01f
-		val moving = (players :+ ball)
-		val (near, far) = moving.partition( t => onScreen(0.75f, t.position) )
-		if (far.isEmpty) {
-			view.camera.zoom *= 1 + autozoomSpeed
-		}
-		else {
-			val notTooFar = far.filter(distance(_) < maxDistanceForZoom)
-			if (! notTooFar.isEmpty) {
-				furthestPoint = (notTooFar).maxBy(distance(_)).position
-				if(! onScreen(0.85f, furthestPoint)) {
-					view.camera.zoom /= 1 + autozoomSpeed
-				}
-			}
-
-		}
-	}
+  lazy val camera = new ArenaCamera
 
 	def update(dt:Float) {
-		autozoom()
+
 	}
 
 	def render() {
 		Color(0x000022).bind()
-		skitch.gfx.rect(zoomBounds(0.8f))
+		skitch.gfx.rect(zoomBounds(camera.boundsOut))
+		skitch.gfx.rect(zoomBounds(camera.boundsIn))
 	}
 
 	def checkVictory() {
@@ -89,4 +72,51 @@ class Arena(rect:Rect, camera:Camera2D)(teams:(Team, Team), tether:Tether)(impli
 			new Wall(a, b)
 		}
 	}
+
+  class ArenaCamera extends Camera2D {
+
+    lazy val minDim = math.min(view.windowRect.width, view.windowRect.height)
+    lazy val viewTangentDistanceAtUnityZoom = minDim / 2 * app.worldScale
+
+    val zoomInSpeed = 0.0005f
+    val zoomOutSpeed = 0.001f
+    val boundsIn = 0.75f
+    val boundsOut = 0.9f
+    def minDistanceForZoom = math.max(tether.idealSlackLength * 1.5f, tether.initialLength * 0.25)
+    def maxDistanceForZoom = math.max(tether.idealSlackLength * 3f, tether.initialLength * 0.67)
+
+    def minZoom = viewTangentDistanceAtUnityZoom / maxDistanceForZoom
+    def maxZoom = viewTangentDistanceAtUnityZoom / minDistanceForZoom
+
+    def zoomIn() {
+      zoom *= 1 + zoomInSpeed
+    }
+
+    def zoomOut() {
+      zoom *= 1 - zoomOutSpeed
+    }
+
+    override def update(dt:Float) {
+
+      val moving = (players).toSet
+      val (tooFar, local) = moving.partition( t => t.position.length > maxDistanceForZoom )
+
+      if (local.isEmpty) {
+        if (zoom > minZoom) zoomOut()
+      } else {
+        val furthest = local.maxBy(_.position.lengthSquared)
+        if (! tooFar.isEmpty && zoom > minZoom) {
+          zoomOut()
+        } else if (! onScreen(boundsOut, furthest.position) && zoom > minZoom) {
+          zoomOut()
+        } else if (zoom < maxZoom && tooFar.isEmpty && onScreen(boundsIn, furthest.position)) {
+          zoomIn()
+        }
+      }
+
+//      zoom = helpers.clamp(zoom)(minZoom, maxZoom)
+
+    }
+  }
+
 }

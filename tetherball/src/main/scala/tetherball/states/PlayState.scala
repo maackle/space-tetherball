@@ -60,27 +60,37 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 		def update(dt:Float) {}
 	}
 
-	val camera = new Camera2D
-
 	val teams = (
-		Team(Winding.CW, Seq(player1)),
-		Team(Winding.CCW, Seq(player2))
+		Team(Winding.CW, Seq(player1), Color.magenta),
+		Team(Winding.CCW, Seq(player2), Color.blue)
 	)
 
-	val arena = new Arena(Rect(vec2.zero, app.windowRect.width * 2 * app.worldScale, app.windowRect.height * 2 * app.worldScale), camera)(teams, tether)
+  def assignTeams() {
+    for (team <- Seq(teams._1, teams._2); player <- team.players) {
+      player.setTeam(team)
+    }
+  }
+
+  assignTeams()
+
+	val arena = new Arena(Rect(vec2.zero, app.windowRect.width * 4 * app.worldScale, app.windowRect.height * 4 * app.worldScale))(teams, tether)
+
+  val camera = arena.camera
 
 	def things = Seq(arena)// ++ arena.things
 
-	val view = arena.view
+	val view:View2D = arena.view
 
 	val consoleView = View2D(new Camera2D)( Seq(consoleThing) )
+
+  val HUDView = View2D(new Camera2D)(arena.players.map(_.OffScreenMarker) )
 
 	val views = Seq(
 		view,
 		View2D(camera)(Seq(arena)),
 		View2D(camera)(Seq(starfield)),
-		new B2DebugView(camera)
-		//		consoleView
+		new B2DebugView(camera),
+		HUDView
 	)
 
 	private var paused = false
@@ -109,7 +119,6 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 	override def update(dt:Float) {
 		handlePause(dt)
 	}
-
 
 	object Contacter extends ContactListener {
 

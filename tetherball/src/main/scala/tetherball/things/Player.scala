@@ -2,6 +2,7 @@ package tetherball.things
 
 import skitch.gfx.Sprite
 import skitch.core._
+import skitch.Types._
 import tetherball.{Countdown, TetherballGame}
 import skitch.vector.{vec, vec2}
 import tetherball.TetherballGame.Thing
@@ -11,7 +12,7 @@ import skitch.core.components.{Position2D, CircleShape}
 import skitch.stage.box2d.{Embodied, ManagedEmbodied}
 import skitch.core.KeyHold
 import tetherball.things.Player.Controls
-import tetherball.TetherballGame.Bits._
+import tetherball.TetherballGame.CollisionBits._
 import skitch.core.KeyHold
 import tetherball.things.Player.Controls
 import skitch.{gl, gfx, Color}
@@ -29,8 +30,6 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
 
 	val app = TetherballGame
 
-	val image = TetherballGame.loader.image("img/player.png")
-
 	val thrustMagnitude = 300
 
 	val initialRadius = 1.5f
@@ -39,32 +38,11 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
 
 	def radius = _radius
 
-	def color = Color.magenta
+  private var team:Team = _
 
-	object OffScreenMarker extends Thing {
+  def setTeam(team:Team) { this.team = team }
 
-		def update(dt:Float) {}
-
-		def render() {
-			val view = state.arena.view
-			val rect = view.viewportRect
-			if ( ! rect.hitTest(player.position) ) { // offscreen
-				val angle = math.abs(player.position.angle % Math.PI)
-				val refAngle = if (angle < Math.PI / 2) {
-					angle
-				} else {
-					Math.PI - angle
-				}
-				val w = (refAngle / Math.PI)
-				val r = ( w * rect.height + (1 - w) * rect.width ) / 2
-				val position = vec.polar(r, player.position.angle)
-				Color.green.bind()
-				gl.fill(true)
-				gfx.circle(1f, position)
-			}
-		}
-	}
-
+  def color = team.color
 
 	object Puff {
 		val recoveryTime = 2f
@@ -134,7 +112,7 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
 
 	lazy val body = {
 
-		import TetherballGame.Bits._
+		import TetherballGame.CollisionBits._
 
 		val bodydef = Embodied.defaults.bodyDef
 
@@ -163,4 +141,60 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
 
 		_fixtureDef
 	}
+
+  object OffScreenMarker extends Thing with AutoAffine2D with Update {
+
+    def arenaViewport = state.arena.view.viewportRect
+    def HUDViewport = state.HUDView.viewportRect
+
+    def powerEllipse(angle:Radian)(a:Real, b:Real) = {
+      val p = 8.0
+      require(p % 2 == 0)
+      a * b / math.pow( math.pow(b * math.cos(angle), p) + math.pow( a * math.sin(angle), p), 1/p)
+    }
+
+    def position = {
+      val angle = player.position.angle
+      val r = powerEllipse(angle)(HUDViewport.width/2, HUDViewport.height/2) - 2
+      val position = vec.polar(r, angle)
+      position
+    }
+
+    def rotation = player.position.angle
+
+    def scaling = {
+      val playerScreen:vec2 = state.view.toScreen(player.position) - state.view.windowRect.center
+      val markerScreen = state.HUDView.toScreen(position) - state.view.windowRect.center
+      vec2.one * (markerScreen.lengthSquared / playerScreen.lengthSquared)
+    }
+
+    class Chevron extends Sprite {
+      val app = TetherballGame
+      def rotation = player.rotation
+      def position = player.position
+      val scaling = vec2.one
+      val image = TetherballGame.loader.image("img/chevron-right.png", origin=vec2(23,40), blitColor=player.color)
+    }
+
+    val chevrons = Seq(new Chevron, new Chevron, new Chevron)
+
+    def update(dt:Float) {
+      for ((chevron, i) <- chevrons.zipWithIndex) {
+        val phase = i * 2 * math.Pi / 6
+//        chevron.image.is.blitColor = Color.white
+      }
+    }
+
+    def render() {
+      if ( ! arenaViewport.hitTest(player.position) ) { // offscreen
+        gl.matrix {
+          for ((chevron, i) <- chevrons.zipWithIndex) {
+            chevron.render()
+            gl.translate(-0.5f, 0)
+          }
+        }
+      }
+    }
+  }
+
 }
