@@ -97,6 +97,7 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 	)
 
 	private var paused = false
+	private var slowdown = false
 	private var advance = false
 
 	val panning = 0.25f
@@ -110,6 +111,8 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 		case KeyHold(KEY_K) => camera.position.y -= panning
 		case KeyHold(KEY_I) => camera.position.y += panning
 
+		case KeyHold(KEY_COMMA) => slowdown = true
+
 		case KeyDown(KEY_NUMPAD0) =>
 //			app.pushState(new PauseState(this))
 			paused = ! paused
@@ -120,7 +123,13 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 	listenTo(arena, ball)
 
 	override def update(dt:Float) {
-		handlePause(dt)
+    if (slowdown) {
+      super.update(dt * 0.10f)
+    } else {
+      super.update(dt)
+    }
+//		handlePause(dt)
+    slowdown = false
 	}
 
 	object Contacter extends ContactListener {

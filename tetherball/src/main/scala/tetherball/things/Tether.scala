@@ -23,7 +23,7 @@ import tetherball.Winding
 
 class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, app:SkitchApp) extends Thing with B2Implicits { rope =>
 
-	val slackFactor = -0.25f
+	val slackFactor = 0.0f
 
 	private val direction = (ball.position - pole.position).unit
 
@@ -67,7 +67,6 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 
 	val poleLimits = (innerNodes).map(new PoleLimit(_))
 	val tensionLimits = (innerNodes).map(new TensionConstraint(_))
-//	val tensionLimits = (innerNodes).map(new TensionLimit(_))
 //	val ballLimits:Seq[HardLimit] = (innerNodes).map(new BallLimit(_))
 	val grandLimiter = new GrandLimit
 
@@ -110,7 +109,7 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 
 	def winding = Winding(windingDirection.toInt)
 
-	def idealWoundLength:Real = {
+	def effectiveWoundLength:Real = {
 		val r = pole.radius + Node.radius
 		math.abs(contactAngle.toFloat * r)
 	}
@@ -119,15 +118,15 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 		wrappedChainPairs.map( p => math.max(0, p.distance) ).sum
 	}
 
-	val realLength = OncePerFrame {
+	val actualLength = OncePerFrame {
 		(for( p <- nodePairs ) yield {
 			p.distance()
 		}).sum
 	}
 
-	def realSlackLength:Real = realLength() - idealWoundLength
+	def realSlackLength:Real = actualLength() - effectiveWoundLength
 
-	def idealSlackLength:Real = initialLength - idealWoundLength
+	def idealSlackLength:Real = initialLength - effectiveWoundLength
 
 	def error = {
 		(for( p <- nodePairs ) yield {
@@ -138,14 +137,13 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 	def isLongerThanShouldBe = realSlackLength > idealSlackLength
 //	def isTaut = grandLimiter.isActive
 //	def isTaut = (ballNode.position - contactPoint.position).length >= grandLimiter.maxLength
-	def isTautBy(extra:Float) = grandLimiter.isActive && realSlackLength > idealSlackLength * extra
+//	def isTautBy(extra:Float) = realSlackLength > idealSlackLength * extra
 	def isTaut = isLongerThanShouldBe // && grandLimiter.isActive
-  def isMerelyTight = grandLimiter.actualLength > tightRange._1
+  def isMerelyTight = tightness > 0 //grandLimiter.actualLengthORSomething > tightRange._1
 
 	def wrappedRatio = {
-		idealWoundLength / realLength()
+		effectiveWoundLength / actualLength()
 	}
-
 
 	def contactAngle: Radian = {
 		val wa = windingAngle
@@ -156,7 +154,13 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 		else 0.0
 	}
 
-	def tightRange = (grandLimiter.maxLength * 0.9f, grandLimiter.maxLength * 1.01f)
+	def tightRange = { (math.max(0, idealSlackLength * 0.95f), math.max(0.01f, idealSlackLength * 1.05f)) }
+
+  def tightness = OncePerFrame {
+    val (lo, hi) = tightRange
+    val r = (grandLimiter.actualLength() - lo) / (hi - lo)
+    math.max(0, r)
+  }
 
 	def contactPointPosition: vec2 = vec.polar(pole.radius + Node.radius, contactAngle + attachmentAngle)
 
@@ -173,11 +177,16 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 	}
 
 	def render() {
-		Color(0xff00ff).bind()
+    gfx.fill(false)
+    Color.yellow.alpha(0.3f).bind()
+    gfx.circle(idealSlackLength)
+    Color.magenta.alpha(0.3f).bind()
+    gfx.circle(realSlackLength)
+
+		Color.cyan.bind()
 		gfx.circle(0.1f, contactPointPosition)
 
-		if(false && rope.isTaut) Color.red.bind()
-		else Color.white.bind()
+		Color.lerp(Color.white, Color.red, tightness).bind()
 		gl.lineWidth(2f)
 		gl.begin(GL11.GL_LINE_STRIP) {
 			allNodes.foreach(n => gl.vertex(n.position))
@@ -186,7 +195,7 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 		gl.lineWidth(1f)
 
 		allNodes.foreach(_.render())
-    hardLimits.foreach(_.render())
+//    hardLimits.foreach(_.render())
 
 //		Color(0x555555).bind()
 //		drawGraph(memWindingAngle)
@@ -369,10 +378,12 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 
 		override val activeColor = Color.cyan
 		override val minLength:Real = 0f
-		override val baseFreq = 30f//60f
+		override def activeFreq = helpers.clamp(tightness * 30)(10f, 30f)
 		override val damping = 0.0f
 
 		override def render() {
+      if (isActive)
+        println(tightness)
 			gl.lineWidth(2f)
 			super.render()
 			gl.lineWidth(1f)
@@ -404,41 +415,40 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 
 		val activeColor = Color.blue
 
-		val baseFreq = 5f
+		def activeFreq = 5f
 		val damping = 0f
 
 		val minLength:Real = rope.pole.radius*4
 
-		def maxLength = maxLengthCalc()
+		def activeLength = activeLengthCalc()
 
-		val maxLengthCalc = {
-			OncePerFrame {
-//				val compensation = wrappedChainPairs.map( p => math.max(0, p.distance - rope.initialSpacing) ).sum
-				val total = initialLength // + compensation
-				math.max(0, total - rope.idealWoundLength)
-			}
+		val activeLengthCalc = OncePerFrame {
+//		  val compensation = wrappedChainPairs.map( p => math.max(0, p.distance - rope.initialSpacing) ).sum
+      val total = initialLength // + compensation
+      math.max(0, total - rope.effectiveWoundLength)
+
 		}
 
 		def isActive = {
 			val strictly = actualLength > minLength && ! node.isBehindContactNode
-			val also = (actualLength > maxLength && outwardSpeed > 0) || (actualLength > maxLength * 1.1f)
+			val also = (actualLength > activeLength && outwardSpeed > 0) || (actualLength > activeLength * 1.1f)
 			strictly && also
 		}
 	}
 
   class TensionConstraint(node:Node) extends CustomConstraint {
     def individuallyActive = ! node.isBehindContactNode && ! node.isTouching
-    def isActive = (rope.isMerelyTight) && individuallyActive
+    def isActive = rope.isMerelyTight && individuallyActive
 
     def update(dt:Float) {
       if (isActive) {
-        val newPos = vec.lerp(node.position, node.projectedPosition, 0.1f)
+        val newPos = vec.lerp(node.body.getPosition, node.projectedPosition, 0.5f * math.min(1f, tightness))
         node.body.setTransform(newPos, node.body.getAngle)
       }
     }
 
     def render() {
-      if (isActive) {
+      if (false && isActive) {
         Color.purple.bind()
         gfx.fill(true)
         gfx.circle(Node.radius*4, node.projectedPosition)
@@ -446,34 +456,34 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
     }
   }
 
-	class TensionLimit(node:Node) extends {
-		val control = new ControlPoint(node.position)
-	} with HardLimit(control, node) {
-
-		val activeColor = Color.yellow
-
-		def baseFreq = 3f
-		val damping = 0.0f
-
-		val minLength = 0.0f
-		val maxLength = 0f
-
-		def individuallyActive = ! node.isBehindContactNode && ! node.isTouching && actualLength > minLength
-		def isActive = (rope.isMerelyTight) && individuallyActive
-
-		override def update(dt:Float) {
-			super.update(dt)
-			control.body.setTransform(node.projectedPosition, 0f)
-		}
-
-		override def render() {
-			super.render()
-			if(isActive) {
-				Color.green.bind()
-				gfx.circle(Node.radius/2, control.position)
-			}
-		}
-	}
+//	class TensionLimit(node:Node) extends {
+//		val control = new ControlPoint(node.position)
+//	} with HardLimit(control, node) {
+//
+//		val activeColor = Color.yellow
+//
+//		def baseFreq = 3f
+//		val damping = 0.0f
+//
+//		val minLength = 0.0f
+//		val maxLength = 0f
+//
+//		def individuallyActive = ! node.isBehindContactNode && ! node.isTouching && actualLength > minLength
+//		def isActive = (rope.isMerelyTight) && individuallyActive
+//
+//		override def update(dt:Float) {
+//			super.update(dt)
+//			control.body.setTransform(node.projectedPosition, 0f)
+//		}
+//
+//		override def render() {
+//			super.render()
+//			if(isActive) {
+//				Color.green.bind()
+//				gfx.circle(Node.radius/2, control.position)
+//			}
+//		}
+//	}
 
   trait CustomConstraint extends Update with Render
 
@@ -481,7 +491,8 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 
 		val earlyTriggerRatio = 1f//0.95f
 		val initialLength = (anchorNode.body.getPosition - node.body.getPosition).length
-		def baseFreq:Float
+
+    def activeFreq:Float
 		def damping:Float
 		val eps = 1e-5f
 
@@ -490,7 +501,7 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 			val jd = new DistanceJointDef
 			jd.initialize(anchorNode.body, node.body, anchorNode.body.getPosition, node.body.getPosition)
 			jd.length = initialLength
-			jd.frequencyHz = baseFreq
+			jd.frequencyHz = eps
 			jd.dampingRatio = damping
 			world.createJoint(jd).asInstanceOf[DistanceJoint]
 		}
@@ -509,30 +520,25 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 		val minLength:Real
 
 		// length at which the limit becomes active
-		def maxLength:Real
+		def activeLength:Real
 
 		val disabledFreq = eps
-
-		def activeFreq = {
-			if(actualLength < minLength*2) baseFreq// * (actualLength / minLength*2)
-			else baseFreq
-		}
 
 		def isActive:Boolean
 
 		def update(dt:Float) {
 			val diff = (node.position - anchorNode.position)
-			val over = diff.length / maxLength
+			val over = diff.length / activeLength
 			if (over > 1) {
 //				node.body.applyForceToCenter(impulse)
 			}
 
 			if (isActive) {
-				j.setLength(maxLength)
+				j.setLength(activeLength)
 				j.setFrequency(activeFreq)
 			}
 			else {
-				j.setLength(maxLength * earlyTriggerRatio)
+				j.setLength(activeLength * earlyTriggerRatio)
 				j.setFrequency(disabledFreq)
 			}
 		}
@@ -545,7 +551,7 @@ class Tether(numNodes:Int, val pole:Pole, val ball:Ball)(implicit world:World, a
 
 			if (isActive) activeColor.bind()
 			else disabledColor.bind()
-			gfx.vector(anchorNode.body.getPosition, diff.unit * maxLength)
+			gfx.vector(anchorNode.body.getPosition, diff.unit * activeLength)
 		}
 	}
 
