@@ -40,6 +40,7 @@ class Ball(initialPosition:vec2)(implicit val world:World, val app:SkitchApp) ex
 		filter.categoryBits = BALL_BIT
 		filter.maskBits = 0xffff & ~ROPE_NODE_BIT
 
+    fixture.friction = 0.5f
 		fixture.userData = this
 		fixture.filter = filter
 		body.createFixture(fixture)

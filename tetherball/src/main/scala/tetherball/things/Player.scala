@@ -138,6 +138,7 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
 		filter.maskBits = 0xff & ~ROPE_NODE_BIT
 
 		_fixtureDef.restitution = 0.5f
+    _fixtureDef.friction = 0.5f
 		_fixtureDef.userData = this
 		_fixtureDef.filter = filter
 

@@ -1,6 +1,6 @@
 package tetherball.things
 
-import skitch.{Color, helpers, Types}
+import skitch.{gfx, Color, helpers, Types}
 import Types._
 import org.jbox2d.dynamics.{Filter, BodyType, World}
 import skitch.stage.box2d.{EdgeBody, Embodied, ManagedEmbodied}
@@ -40,6 +40,7 @@ class Arena(rect:Rect)(teams:(Team, Team), tether:Tether)(implicit val app:Skitc
 
 	def render() {
 		Color(0x000022).bind()
+    gfx.fill(false)
 		skitch.gfx.rect(zoomBounds(camera.boundsOut))
 		skitch.gfx.rect(zoomBounds(camera.boundsIn))
 	}
@@ -79,30 +80,38 @@ class Arena(rect:Rect)(teams:(Team, Team), tether:Tether)(implicit val app:Skitc
     lazy val viewTangentDistanceAtUnityZoom = minDim / 2 * app.worldScale
 
     val zoomInSpeed = 0.0005f
-    val zoomOutSpeed = 0.001f
-    val boundsIn = 0.75f
-    val boundsOut = 0.9f
-    def minDistanceForZoom = math.max(tether.idealSlackLength * 1.5f, tether.initialLength * 0.25)
-    def maxDistanceForZoom = math.max(tether.idealSlackLength * 3f, tether.initialLength * 0.67)
+    val zoomOutSpeed = 0.003f
+    val zoomAccel = 0.00001f
+    var zoomSpeed = 0f
+
+    val boundsIn = 0.70f
+    val boundsOut = 0.75f
+    def minDistanceForZoom = math.max(tether.idealSlackLength * 1.2f, tether.initialLength * 0.25)
+    def maxDistanceForZoom = math.max(tether.idealSlackLength * 2.25f, tether.initialLength * 0.67)
 
     def minZoom = viewTangentDistanceAtUnityZoom / maxDistanceForZoom
     def maxZoom = viewTangentDistanceAtUnityZoom / minDistanceForZoom
 
     def zoomIn() {
-      zoom *= 1 + zoomInSpeed
+      if (zoomSpeed < zoomInSpeed) zoomSpeed += zoomAccel
     }
 
     def zoomOut() {
-      zoom *= 1 - zoomOutSpeed
+      if (zoomSpeed > -zoomOutSpeed) zoomSpeed -= zoomAccel
+    }
+
+    def zoomStop() {
+      zoomSpeed *= 0.99f
     }
 
     override def update(dt:Float) {
-
+      return
       val moving = (players).toSet
       val (tooFar, local) = moving.partition( t => t.position.length > maxDistanceForZoom )
 
       if (local.isEmpty) {
         if (zoom > minZoom) zoomOut()
+        else zoomStop()
       } else {
         val furthest = local.maxBy(_.position.lengthSquared)
         if (! tooFar.isEmpty && zoom > minZoom) {
@@ -111,8 +120,13 @@ class Arena(rect:Rect)(teams:(Team, Team), tether:Tether)(implicit val app:Skitc
           zoomOut()
         } else if (zoom < maxZoom && tooFar.isEmpty && onScreen(boundsIn, furthest.position)) {
           zoomIn()
+        } else {
+          zoomStop()
         }
       }
+
+      zoom *= 1 + zoomSpeed
+
 
 //      zoom = helpers.clamp(zoom)(minZoom, maxZoom)
 

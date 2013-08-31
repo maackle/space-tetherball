@@ -30,8 +30,8 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 	implicit val world:World = new World(new Vec2(0,0))
 	implicit val state = this
 
-	val baseVelocityIterations = 10
-	val basePositionIterations = 3
+	val baseVelocityIterations = 30
+	val basePositionIterations = 8
 	val iterationIncrement = 100
 	val maxIterations = 500
 	var velocityIterations = baseVelocityIterations
