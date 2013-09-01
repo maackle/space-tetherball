@@ -18,6 +18,7 @@ import org.jbox2d.collision.Manifold
 import skitch.core.KeyDown
 import scala.Some
 import skitch.core.KeyHold
+import skitch.input.{X360, ControllerSystem}
 
 class PlayState extends SkitchState(TetherballGame) with B2World {
 
@@ -37,10 +38,30 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 	var velocityIterations = baseVelocityIterations
 	var positionIterations = basePositionIterations
 
+  val numPlayers = 2
+
 	val clearColor = Some(Color(0x222222))
 
-	val player1 = new Player(vec(-20, 20), Player.Controls(KEY_LEFT, KEY_RIGHT, KEY_DOWN, KEY_UP, KEY_SPACE))
-	val player2 = new Player(vec(20, 20), Player.Controls(KEY_NUMPAD4, KEY_NUMPAD6, KEY_NUMPAD5, KEY_NUMPAD8, KEY_NUMPADENTER))
+  val defaultKeyboardControls = IndexedSeq(
+    Player.KeyboardControls(KEY_A, KEY_D, KEY_S, KEY_W, KEY_SPACE),
+    Player.KeyboardControls(KEY_LEFT, KEY_RIGHT, KEY_DOWN, KEY_UP, KEY_RETURN)
+  )
+
+  val playerStartPostions = IndexedSeq(
+    vec(-20, 0),
+    vec(20, 0)
+  )
+
+  val players = for (i <- Seq.range(0, numPlayers)) yield {
+    val ctls = ControllerSystem.X360Controllers
+    val playerControls = {
+      if (ctls.length > i) {
+        Player.XBoxControls(ctls(i))
+      }
+      else defaultKeyboardControls(i)
+    }
+    new Player(playerStartPostions(i), playerControls)
+  }
 
 	val pole = new Pole(0.6f)
 
@@ -63,20 +84,21 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 		def update(dt:Float) {}
 	}
 
+//  override val eventSources = super.eventSources ++: ControllerSystem.X360Controllers
+
 	val teams = (
-		Team(Winding.CW, Seq(player1), Color.magenta),
-		Team(Winding.CCW, Seq(player2), Color.blue)
+		Team(Winding.CW, Color.magenta),
+		Team(Winding.CCW, Color.blue)
 	)
 
-  def assignTeams() {
-    for (team <- Seq(teams._1, teams._2); player <- team.players) {
-      player.setTeam(team)
-    }
+  val (teamCW, teamCCW) = teams
+
+  for ((p, i) <- players.zipWithIndex) {
+    if ((i % 2) == 0) p.setTeam(teamCW)
+    else p.setTeam(teamCCW)
   }
 
-  assignTeams()
-
-	val arena = new Arena(Rect(vec2.zero, app.windowRect.width * 4 * app.worldScale, app.windowRect.height * 4 * app.worldScale))(teams, tether)
+	val arena = new Arena(Rect(vec2.zero, app.windowRect.width * 4 * app.worldScale, app.windowRect.height * 4 * app.worldScale))(players, teams, tether)
 
   val camera = arena.camera
 
@@ -86,7 +108,7 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 
 	val consoleView = View2D(new Camera2D)( Seq(consoleThing) )
 
-  val HUDView = View2D(new Camera2D)(arena.players.map(_.OffScreenMarker) )
+  val HUDView = View2D(new Camera2D)(players.map(_.OffScreenMarker) )
 
 	val views = Seq(
 		view,
@@ -121,6 +143,8 @@ class PlayState extends SkitchState(TetherballGame) with B2World {
 	}
 
 	listenTo(arena, ball)
+
+//  for (p <- players) listenTo(p)
 
 	override def update(dt:Float) {
     if (slowdown) {

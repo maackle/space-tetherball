@@ -6,12 +6,14 @@ import java.io.File
 import grizzled.slf4j.Logging
 import org.lwjgl.input.Keyboard
 import skitch.audio.SoundSystem
+import skitch.input.ControllerSystem
 
 object TetherballGame extends SkitchApp with App with Logging { self =>
 
 	def initialize = {
 		info("app starting")
 		SoundSystem.initialize()
+    ControllerSystem.initialize()
 		loader.autoload()
 	}
 

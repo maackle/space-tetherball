@@ -10,27 +10,37 @@ import org.jbox2d.collision.shapes
 import org.jbox2d.dynamics.{World, Filter, BodyType}
 import skitch.core.components.{Position2D, CircleShape}
 import skitch.stage.box2d.{Embodied, ManagedEmbodied}
-import skitch.core.KeyHold
-import tetherball.things.Player.Controls
 import tetherball.TetherballGame.CollisionBits._
 import skitch.core.KeyHold
-import tetherball.things.Player.Controls
 import skitch.{gl, gfx, Color}
 import skitch.audio.Sound
 import tetherball.states.PlayState
+import skitch.input.X360
+import tetherball.things.Player.{XBoxControls, KeyboardControls}
 
 
 object Player {
 
-	case class Controls(left:Int, right:Int, down:Int, up:Int, act:Int)
+  trait Controls {
+    def source:EventSource[Event]
+  }
+
+	case class KeyboardControls(left:Int, right:Int, down:Int, up:Int, act:Int) extends Controls {
+    val source = KeyEventSource
+  }
+
+  case class XBoxControls(xbox:X360) extends Controls {
+    val source = xbox
+  }
 
 }
 
-class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, world:World) extends Physical with ManagedEmbodied with CircleShape with EventSink { player =>
+
+class Player(initialPosition:vec2, controls:Player.Controls)(implicit state:PlayState, world:World) extends Physical with ManagedEmbodied with CircleShape with EventSink { player =>
 
 	val app = TetherballGame
 
-	val thrustMagnitude = 300
+	val thrustMagnitude = 600
 
 	val initialRadius = 1.5f
 
@@ -39,6 +49,8 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
 	def radius = _radius
 
   private var team:Team = _
+
+  override val eventSources = Set(controls.source)
 
   def setTeam(team:Team) { this.team = team }
 
@@ -83,16 +95,24 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
 		val ow = new Sound(TetherballGame.loader.ogg("snd/ow.ogg"))
 	}
 
-  SFX  // load it right away
+  SFX  // objects are lazy.  load them right away
 
-	val movementControls = new EventHandler({
-		case KeyHold(controls.left)     => body.applyForce(vec(-thrustMagnitude, 0), position)
-		case KeyHold(controls.right)    => body.applyForce(vec(+thrustMagnitude, 0), position)
-		case KeyHold(controls.down)     => body.applyForce(vec(0, -thrustMagnitude), position)
-		case KeyHold(controls.up)       => body.applyForce(vec(0, +thrustMagnitude), position)
-		case KeyHold(controls.act) =>
-			Puff.activate()
-	})
+	val movementControls = controls match {
+    case controls:KeyboardControls =>
+      new EventHandler({
+        case KeyHold(controls.left)     => body.applyForce(vec(-thrustMagnitude, 0), position)
+        case KeyHold(controls.right)    => body.applyForce(vec(+thrustMagnitude, 0), position)
+        case KeyHold(controls.down)     => body.applyForce(vec(0, -thrustMagnitude), position)
+        case KeyHold(controls.up)       => body.applyForce(vec(0, +thrustMagnitude), position)
+        case KeyHold(controls.act) =>
+          Puff.activate()
+      })
+    case controls:XBoxControls =>
+      new EventHandler({
+        case X360.Stick(stick) =>
+          body.applyForce(stick * thrustMagnitude, position)
+      })
+  }
 
 	def doPuff() {
 
@@ -108,7 +128,7 @@ class Player(initialPosition:vec2, controls:Controls)(implicit state:PlayState, 
 		Puff.update(dt)
 	}
 
-	listenTo {
+	listenToHandler {
 		movementControls
 	}
 

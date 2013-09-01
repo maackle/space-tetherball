@@ -12,7 +12,7 @@ import skitch.core._
 import tetherball.TetherballGame.Thing
 import skitch.core.components.Position2D
 
-class Arena(rect:Rect)(teams:(Team, Team), tether:Tether)(implicit val app:SkitchApp, world:World) extends Thing with ThingManager with EventSink  {
+class Arena(rect:Rect)(players:Seq[Player], teams:(Team, Team), tether:Tether)(implicit val app:SkitchApp, world:World) extends Thing with ThingManager with EventSink  {
 
 	private var furthestPoint = vec2.zero
 
@@ -21,8 +21,6 @@ class Arena(rect:Rect)(teams:(Team, Team), tether:Tether)(implicit val app:Skitc
 
 	def teamCW = teams._1
 	def teamCCW = teams._2
-
-	def players = teamCW.players ++ teamCCW.players
 
 	def distance(t:Position2D) = (t.position - pole.position).length
 	def zoomBounds(scale:Float) = view.viewportRect.scaled(scale)
@@ -106,7 +104,7 @@ class Arena(rect:Rect)(teams:(Team, Team), tether:Tether)(implicit val app:Skitc
 
     override def update(dt:Float) {
       return
-      val moving = (players).toSet
+      val moving = players.toSet
       val (tooFar, local) = moving.partition( t => t.position.length > maxDistanceForZoom )
 
       if (local.isEmpty) {

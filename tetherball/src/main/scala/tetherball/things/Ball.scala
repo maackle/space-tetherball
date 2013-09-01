@@ -47,17 +47,13 @@ class Ball(initialPosition:vec2)(implicit val world:World, val app:SkitchApp) ex
 		body
 	}
 
-	val thrustMagnitude = 60
+	val thrustMagnitude = 100
 
-	val movementControls = new EventHandler({
-		case KeyHold(KEY_A) => body.applyForce(vec(-thrustMagnitude, 0), position)
-		case KeyHold(KEY_D) => body.applyForce(vec(+thrustMagnitude, 0), position)
-		case KeyHold(KEY_S) => body.applyForce(vec(0, -thrustMagnitude), position)
-		case KeyHold(KEY_W) => body.applyForce(vec(0, +thrustMagnitude), position)
-	})
-
-	listenTo {
-		movementControls
+	listen {
+    case KeyHold(KEY_NUMPAD4) => body.applyForce(vec(-thrustMagnitude, 0), position)
+    case KeyHold(KEY_NUMPAD6) => body.applyForce(vec(+thrustMagnitude, 0), position)
+    case KeyHold(KEY_NUMPAD5) => body.applyForce(vec(0, -thrustMagnitude), position)
+    case KeyHold(KEY_NUMPAD8) => body.applyForce(vec(0, +thrustMagnitude), position)
 	}
 
 }
