@@ -1,7 +1,7 @@
 package tetherball
 
 import skitch.core.{Update, ResourceLoader, SkitchApp}
-import tetherball.states.PlayState
+import tetherball.states.{StartupState, PlayState}
 import java.io.File
 import grizzled.slf4j.Logging
 import org.lwjgl.input.Keyboard
@@ -25,7 +25,7 @@ object TetherballGame extends SkitchApp with App with Logging { self =>
 	val loader = new ResourceLoader(new File("tetherball/src/main/resources"))
 	val initialWindowSize = Some(1600, 1200)
 	val windowTitle = "space tetherball"
-	lazy val startState = new PlayState
+	lazy val startState = new StartupState
 	val worldScale = 1f / 30f
 	val fps = 60
 

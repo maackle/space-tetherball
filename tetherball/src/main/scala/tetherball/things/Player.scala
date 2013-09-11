@@ -108,9 +108,12 @@ class Player(initialPosition:vec2, controls:Player.Controls)(implicit state:Play
           Puff.activate()
       })
     case controls:XBoxControls =>
+      import X360._
       new EventHandler({
         case X360.Stick(stick) =>
           body.applyForce(stick * thrustMagnitude, position)
+        case ButtonDown(A) | ButtonDown(B) | ButtonDown(X) | ButtonDown(Y) =>
+          Puff.activate()
       })
   }
 

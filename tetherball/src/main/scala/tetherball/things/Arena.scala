@@ -77,9 +77,9 @@ class Arena(rect:Rect)(players:Seq[Player], teams:(Team, Team), tether:Tether)(i
     lazy val minDim = math.min(view.windowRect.width, view.windowRect.height)
     lazy val viewTangentDistanceAtUnityZoom = minDim / 2 * app.worldScale
 
-    val zoomInSpeed = 0.0005f
+    val zoomInSpeed = 0.002f
     val zoomOutSpeed = 0.003f
-    val zoomAccel = 0.00001f
+    val zoomAccel = 0.000005f
     var zoomSpeed = 0f
 
     val boundsIn = 0.70f
@@ -103,8 +103,8 @@ class Arena(rect:Rect)(players:Seq[Player], teams:(Team, Team), tether:Tether)(i
     }
 
     override def update(dt:Float) {
-      return
-      val moving = players.toSet
+
+      val moving = players.toSet + ball
       val (tooFar, local) = moving.partition( t => t.position.length > maxDistanceForZoom )
 
       if (local.isEmpty) {
